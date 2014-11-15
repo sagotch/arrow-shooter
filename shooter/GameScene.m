@@ -29,8 +29,8 @@
     self.physicsBody.dynamic = YES ;
     self.physicsBody.allowsRotation = NO ;
     self.physicsBody.categoryBitMask = HERO ;
-    self.physicsBody.collisionBitMask = GROUND ;
-    self.physicsBody.contactTestBitMask = GROUND ;
+    self.physicsBody.collisionBitMask = GROUND | WALL ;
+    self.physicsBody.contactTestBitMask = GROUND | WALL ;
     return self ;
 }
 
@@ -79,8 +79,8 @@
     self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(10, 10)] ;
     self.physicsBody.dynamic = YES ;
     self.physicsBody.categoryBitMask = ARROW ;
-    self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY ;
-    self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY ;
+    self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY | WALL;
+    self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY | WALL;
     return self ;
 }
 @end
@@ -99,18 +99,42 @@
 @end
 
 
+// Landscape
+@implementation Landscape
+
+-(instancetype)initWithSize:(CGSize)size
+{
+    self = [super initWithColor:[NSColor blackColor] size:size];
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
+    self.physicsBody.friction = 0;
+    self.physicsBody.dynamic = NO ;
+    return self ;
+}
+
+@end
+
 // Ground
 @implementation Ground
 
 -(instancetype)initWithWidth:(float)width
 {
-    self = [super initWithColor:[NSColor blackColor] size:CGSizeMake(width, 10)] ;
-    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
-    self.physicsBody.friction = 0;
-    self.physicsBody.dynamic = NO ;
-    self.physicsBody.contactTestBitMask = GROUND ;
+    self = [super initWithSize:CGSizeMake(width, 10)] ;
+    self.physicsBody.categoryBitMask = GROUND ;
     return self;
 }
+@end
+
+// Wall
+
+@implementation Wall
+
+-(instancetype)initWithHeight:(float)height
+{
+    self = [super initWithSize:CGSizeMake(10, height)] ;
+    self.physicsBody.categoryBitMask = WALL ;
+    return self ;
+}
+
 @end
 
 // GameScene
@@ -180,9 +204,12 @@
 -(void)setupLevel
 {
     Ground * platform = [[Ground alloc] initWithWidth:100] ;
-    platform.position = CGPointMake(400, 400) ;
+    platform.position = CGPointMake(200, 200) ;
     [self addChild:platform] ;
     
+    Wall * wall = [[Wall alloc] initWithHeight:300] ;
+    wall.position = CGPointMake(600, 200) ;
+    [self addChild:wall] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {

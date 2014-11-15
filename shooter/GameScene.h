@@ -13,7 +13,8 @@ enum {
     HERO     = 0x1 << 2,
     GROUND   = 0x1 << 3,
     ARROW    = 0x1 << 4,
-    FIREBALL = 0x1 << 5
+    FIREBALL = 0x1 << 5,
+    WALL     = 0x1 << 6
 };
 
 
@@ -46,7 +47,13 @@ enum {
 
 // GROUND
 
-@interface Ground : SKSpriteNode
+@interface Landscape : SKSpriteNode
+@end
+
+@interface Ground : Landscape
+@end
+
+@interface Wall : Landscape
 @end
 
 // GAMESCENE
