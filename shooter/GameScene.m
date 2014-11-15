@@ -153,7 +153,7 @@
     
     if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
     {
-        ((Hero *) a.node).groundContact += 1;
+        ((Hero *) a.node).groundContact = YES;
     }
 }
 
@@ -168,7 +168,7 @@
     
     if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
     {
-        ((Hero *) a.node).groundContact -= 1;
+        ((Hero *) a.node).groundContact = NO;
     }
 }
 
@@ -188,17 +188,26 @@
     [self addChild:self.enemy];
     
     /* Add bounds */
-    SKSpriteNode * bounds = [[SKSpriteNode alloc] init] ;
-    bounds.position = CGPointMake(0, 0) ;
-    bounds.physicsBody =
-    [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, self.size.width, self.size.height)] ;
-    bounds.physicsBody.friction = 0;
-    bounds.physicsBody.categoryBitMask = GROUND ;
-    bounds.physicsBody.contactTestBitMask = GROUND ;
-    [self addChild:bounds] ;
-    
+    [self setupBounds] ;
     [self setupLevel] ;
     
+}
+
+-(void) setupBounds
+{
+    Ground * floor = [[Ground alloc] initWithWidth:self.size.width] ;
+    Wall * lwall = [[Wall alloc] initWithHeight:self.size.height] ;
+    Wall * rwall = [[Wall alloc] initWithHeight:self.size.height] ;
+ //TODO: Do not use Ground for roof...
+    Ground * roof = [[Ground alloc] initWithWidth:self.size.width] ;
+    floor.position = CGPointMake(self.size.width / 2, 0) ;
+    lwall.position = CGPointMake(0, self.size.height / 2) ;
+    rwall.position = CGPointMake(self.size.width, self.size.height / 2) ;
+    roof.position = CGPointMake(self.size.width / 2, self.size.height) ;
+    [self addChild:floor];
+    [self addChild:lwall];
+    [self addChild:rwall];
+    [self addChild:roof];
 }
 
 -(void)setupLevel

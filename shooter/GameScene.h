@@ -26,7 +26,7 @@ enum {
 @interface Hero : Character
 @property bool left ;
 @property bool right ;
-@property int groundContact ;
+@property bool groundContact ;
 -(void) jump ;
 @end
 
