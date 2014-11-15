@@ -7,39 +7,158 @@
 //
 
 #import "GameScene.h"
+#include "CGVectorAdditions.h"
 
 @implementation GameScene
 
+enum {
+    ENNEMY = 0x1 << 1,
+    HERO   = 0x1 << 2,
+    GROUND = 0x1 << 3,
+    BULLET = 0x1 << 4
+};
+
+
+- (void) didBeginContact:(SKPhysicsContact *)contact
+{
+    SKPhysicsBody * a, * b;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
+    { a = contact.bodyA; b = contact.bodyB; }
+    else
+    { a = contact.bodyB; b = contact.bodyA; }
+    
+    if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
+    {
+        self.groundContact += 1;
+    }
+}
+
+-(void) didEndContact:(SKPhysicsContact *)contact
+{
+    SKPhysicsBody * a, * b;
+    
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
+    { a = contact.bodyA; b = contact.bodyB; }
+    else
+    { a = contact.bodyB; b = contact.bodyA; }
+    
+    if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
+    {
+        self.groundContact -= 1;
+    }
+}
+
+-(void)shoot :(CGPoint)l :(CGVector)v
+{
+    NSLog(@"shoot") ;
+    SKSpriteNode * bullet = [SKSpriteNode spriteNodeWithColor:[NSColor redColor]
+                                                         size:CGSizeMake(10, 10)] ;
+    bullet.position = l ;
+    bullet.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bullet.size];
+    bullet.physicsBody.dynamic = YES ;
+    bullet.physicsBody.velocity = v ;
+    bullet.physicsBody.affectedByGravity = YES ;
+    bullet.physicsBody.categoryBitMask = BULLET ;
+    bullet.physicsBody.collisionBitMask = GROUND | BULLET | ENNEMY ;
+    bullet.physicsBody.contactTestBitMask = GROUND | BULLET | ENNEMY ;
+    [self addChild:bullet] ;
+}
+
 -(void)didMoveToView:(SKView *)view {
+    [super didMoveToView:view];
     /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    self.physicsWorld.contactDelegate = self;
     
-    myLabel.text = @"Hello, World!";
-    myLabel.fontSize = 65;
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
+    /* Hero setup. */
+    self.hero = [[SKSpriteNode alloc] initWithColor:[NSColor blueColor]
+                                            size:CGSizeMake(50, 50)] ;
+    self.hero.position = CGPointMake(300, 300);
+    self.hero.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.hero.size] ;
+    self.hero.physicsBody.affectedByGravity = YES ;
+    self.hero.physicsBody.allowsRotation = NO ;
+    //self.hero.physicsBody.mass = 0.0 ;
+    self.hero.physicsBody.dynamic = YES ;
+    self.hero.physicsBody.categoryBitMask = HERO ;
+    self.hero.physicsBody.collisionBitMask = GROUND ;
+    self.hero.physicsBody.contactTestBitMask = GROUND ;
+    [self addChild:self.hero];
     
-    [self addChild:myLabel];
+    self.groundContact = 0 ;
+    
+    /* Add bounds */
+    SKSpriteNode * bounds = [[SKSpriteNode alloc] init] ;
+    bounds.position = CGPointMake(0, 0) ;
+    bounds.physicsBody =
+    [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, self.size.width, self.size.height)] ;
+    bounds.physicsBody.friction = 0;
+    // BUG: touch left or right limit and jump wont be available anymore...
+    bounds.physicsBody.categoryBitMask = GROUND ;
+    //bounds.physicsBody.contactTestBitMask = GROUND ;
+    [self addChild:bounds] ;
+    
+    [self setupLevel] ;
+    
+}
+
+-(void)setupLevel
+{
+    SKSpriteNode * platform = [[SKSpriteNode alloc] initWithColor:[NSColor blackColor] size:CGSizeMake(100, 1)] ;
+    platform.position = CGPointMake(400, 400) ;
+    platform.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:platform.size] ;
+    platform.physicsBody.friction = 0;
+    platform.physicsBody.dynamic = NO ;
+    platform.physicsBody.contactTestBitMask = GROUND ;
+    [self addChild:platform] ;
+    
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
-     /* Called when a mouse click occurs */
-    
+    self.start = [NSDate date] ;
+    }
+
+-(void)mouseUp:(NSEvent *)theEvent {
+    float charge = fmin(3, 1 + 2 * fabsf([self.start timeIntervalSinceNow])) ;
     CGPoint location = [theEvent locationInNode:self];
+    CGVector v = CGVectorMake((location.x - self.hero.position.x),
+                              (location.y - self.hero.position.y)) ;
+    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 500 * charge) ;
     
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
-    
-    sprite.position = location;
-    sprite.scale = 0.5;
-    
-    SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-    
-    [sprite runAction:[SKAction repeatActionForever:action]];
-    
-    [self addChild:sprite];
+    [self shoot:self.hero.position :v] ;
+}
+
+
+-(void)keyDown:(NSEvent *)theEvent
+{
+    switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
+    {
+        case 'a':
+        {self.left = YES ; break ;}
+        case 'd':
+        {self.right = YES ; break ;}
+        case 'w':
+        {if (self.groundContact > 0)[self.hero.physicsBody applyImpulse:CGVectorMake(0, 75)] ; break;}
+    }
+}
+
+-(void)keyUp:(NSEvent *)theEvent
+{
+    switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
+    {
+        case 'a':
+        {self.left = NO ; break ;}
+        case 'd':
+        {self.right = NO ; break ;}
+    }
 }
 
 -(void)update:(CFTimeInterval)currentTime {
+    float speed = 400 ;
+    float dx = 0;
+    float dy = self.hero.physicsBody.velocity.dy ;
+    if (self.left) dx = -speed ;
+    else if (self.right) dx = speed ;
+    self.hero.physicsBody.velocity = CGVectorMake(dx, dy);
     /* Called before each frame is rendered */
 }
 

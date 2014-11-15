@@ -8,6 +8,10 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface GameScene : SKScene
-
+@interface GameScene : SKScene <SKPhysicsContactDelegate>
+@property SKSpriteNode * hero ;
+@property bool left ;
+@property bool right ;
+@property int groundContact ;
+@property NSDate * start ;
 @end
