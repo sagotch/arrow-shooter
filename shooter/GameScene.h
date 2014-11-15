@@ -44,6 +44,11 @@ enum {
 @interface FireBall : Projectile
 @end
 
+// GROUND
+
+@interface Ground : SKSpriteNode
+@end
+
 // GAMESCENE
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>

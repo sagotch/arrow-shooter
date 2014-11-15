@@ -98,6 +98,23 @@
 }
 @end
 
+
+// Ground
+@implementation Ground
+
+-(instancetype)initWithWidth:(float)width
+{
+    self = [super initWithColor:[NSColor blackColor] size:CGSizeMake(width, 10)] ;
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
+    self.physicsBody.friction = 0;
+    self.physicsBody.dynamic = NO ;
+    self.physicsBody.contactTestBitMask = GROUND ;
+    return self;
+}
+@end
+
+// GameScene
+
 @implementation GameScene
 
 
@@ -162,12 +179,8 @@
 
 -(void)setupLevel
 {
-    SKSpriteNode * platform = [[SKSpriteNode alloc] initWithColor:[NSColor blackColor] size:CGSizeMake(100, 1)] ;
+    Ground * platform = [[Ground alloc] initWithWidth:100] ;
     platform.position = CGPointMake(400, 400) ;
-    platform.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:platform.size] ;
-    platform.physicsBody.friction = 0;
-    platform.physicsBody.dynamic = NO ;
-    platform.physicsBody.contactTestBitMask = GROUND ;
     [self addChild:platform] ;
     
 }
