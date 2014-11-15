@@ -36,7 +36,7 @@
 
 -(void)jump
 {
-    if (self.groundContact > 0)
+    if ((self.contact & DOWN) != 0)
         [self.physicsBody applyImpulse:CGVectorMake(0, 150)] ;
 }
 
@@ -153,7 +153,7 @@
     
     if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
     {
-        ((Hero *) a.node).groundContact = YES;
+        ((Hero *) a.node).contact |= DOWN ;
     }
 }
 
@@ -168,7 +168,7 @@
     
     if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
     {
-        ((Hero *) a.node).groundContact = NO;
+        ((Hero *) a.node).contact &= (~DOWN);
     }
 }
 
@@ -244,9 +244,9 @@
     switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
     {
         case 'a':
-        {self.hero.left = YES ; break ;}
+        {self.hero.dir |= LEFT ; break ;}
         case 'd':
-        {self.hero.right = YES ; break ;}
+        {self.hero.dir |= RIGHT ; break ;}
         case 'w':
         {[self.hero jump] ; break ;}
     }
@@ -257,9 +257,9 @@
     switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
     {
         case 'a':
-        {self.hero.left = NO ; break ;}
+        {self.hero.dir &= ~LEFT ; break ;}
         case 'd':
-        {self.hero.right = NO ; break ;}
+        {self.hero.dir &= ~RIGHT ; break ;}
     }
 }
 
@@ -267,8 +267,8 @@
     float speed = 400 ;
     float dx = 0;
     float dy = self.hero.physicsBody.velocity.dy ;
-    if (self.hero.left) dx = -speed ;
-    else if (self.hero.right) dx = speed ;
+    if ((self.hero.dir & LEFT) != 0) dx = -speed ;
+    else if ((self.hero.dir & RIGHT) != 0) dx = speed ;
     self.hero.physicsBody.velocity = CGVectorMake(dx, dy);
     /* Called before each frame is rendered */
 }

@@ -8,13 +8,20 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-enum {
+enum category {
     ENEMY    = 0x1 << 1,
     HERO     = 0x1 << 2,
     GROUND   = 0x1 << 3,
     ARROW    = 0x1 << 4,
     FIREBALL = 0x1 << 5,
     WALL     = 0x1 << 6
+};
+
+enum direction {
+    LEFT  = 0x1 << 1,
+    RIGHT = 0x1 << 2,
+    UP    = 0x1 << 3,
+    DOWN  = 0x1 << 4
 };
 
 
@@ -24,9 +31,8 @@ enum {
 @end
 
 @interface Hero : Character
-@property bool left ;
-@property bool right ;
-@property bool groundContact ;
+@property int dir ;
+@property int contact ;
 -(void) jump ;
 @end
 
