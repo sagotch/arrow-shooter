@@ -10,6 +10,7 @@
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 @property SKSpriteNode * hero ;
+@property SKSpriteNode * enemy ;
 @property bool left ;
 @property bool right ;
 @property int groundContact ;

@@ -12,7 +12,7 @@
 @implementation GameScene
 
 enum {
-    ENNEMY = 0x1 << 1,
+    ENEMY = 0x1 << 1,
     HERO   = 0x1 << 2,
     GROUND = 0x1 << 3,
     BULLET = 0x1 << 4
@@ -60,8 +60,8 @@ enum {
     bullet.physicsBody.velocity = v ;
     bullet.physicsBody.affectedByGravity = YES ;
     bullet.physicsBody.categoryBitMask = BULLET ;
-    bullet.physicsBody.collisionBitMask = GROUND | BULLET | ENNEMY ;
-    bullet.physicsBody.contactTestBitMask = GROUND | BULLET | ENNEMY ;
+    bullet.physicsBody.collisionBitMask = GROUND | BULLET | ENEMY ;
+    bullet.physicsBody.contactTestBitMask = GROUND | BULLET | ENEMY ;
     [self addChild:bullet] ;
 }
 
@@ -83,8 +83,29 @@ enum {
     self.hero.physicsBody.collisionBitMask = GROUND ;
     self.hero.physicsBody.contactTestBitMask = GROUND ;
     [self addChild:self.hero];
-    
+
     self.groundContact = 0 ;
+    
+    /* Enemy setup */
+    self.enemy = [[SKSpriteNode alloc] initWithColor:[NSColor redColor]
+                                               size:CGSizeMake(50, 50)] ;
+    self.enemy.position = CGPointMake(800, 300);
+    self.enemy.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.enemy.size] ;
+    self.enemy.physicsBody.affectedByGravity = NO ;
+    self.enemy.physicsBody.allowsRotation = NO ;
+    self.enemy.physicsBody.dynamic = NO ;
+    self.enemy.physicsBody.categoryBitMask = ENEMY ;
+    self.enemy.physicsBody.collisionBitMask = 0 ;
+    self.enemy.physicsBody.contactTestBitMask = 0 ;
+    [self addChild:self.enemy];
+    [self runAction:
+     [SKAction repeatActionForever:
+      [SKAction sequence:
+       @[[SKAction waitForDuration:1],
+         [SKAction runBlock:^{
+          [self shoot :self.enemy.position :CGVectorMake(100,100)];
+      }]]]]];
+
     
     /* Add bounds */
     SKSpriteNode * bounds = [[SKSpriteNode alloc] init] ;
