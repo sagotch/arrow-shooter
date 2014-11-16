@@ -28,6 +28,7 @@
     self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(50, 75)] ;
     self.physicsBody.dynamic = YES ;
     self.physicsBody.allowsRotation = NO ;
+    self.physicsBody.restitution = 0 ;
     self.physicsBody.categoryBitMask = HERO ;
     self.physicsBody.collisionBitMask = GROUND | WALL ;
     self.physicsBody.contactTestBitMask = GROUND | WALL ;
@@ -36,8 +37,11 @@
 
 -(void)jump
 {
-    if ((self.contact & DOWN) != 0)
+    if ((self.contact & (DOWN | LEFT | RIGHT)) != 0)
+    {
+        self.physicsBody.velocity = CGVectorMake(self.physicsBody.velocity.dx, 0) ;
         [self.physicsBody applyImpulse:CGVectorMake(0, 150)] ;
+    }
 }
 
 @end
@@ -106,6 +110,7 @@
 {
     self = [super initWithColor:[NSColor blackColor] size:size];
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
+    self.physicsBody.restitution = 0 ;
     self.physicsBody.friction = 0;
     self.physicsBody.dynamic = NO ;
     return self ;
@@ -151,9 +156,17 @@
     else
     { a = contact.bodyB; b = contact.bodyA; }
     
-    if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
+    if ((a.categoryBitMask & HERO) != 0)
     {
-        ((Hero *) a.node).contact |= DOWN ;
+        if ((b.categoryBitMask & GROUND) != 0)
+        {
+            ((Hero *) a.node).contact |= DOWN ;
+        }
+        else if ((b.categoryBitMask & WALL) != 0)
+        {
+            ((Hero *) a.node).contact |=
+            (a.node.position.x < b.node.position.x ? RIGHT : LEFT) ;
+        }
     }
 }
 
@@ -166,9 +179,17 @@
     else
     { a = contact.bodyB; b = contact.bodyA; }
     
-    if ((a.categoryBitMask & HERO) != 0 && (b.categoryBitMask & GROUND) != 0)
+    if ((a.categoryBitMask & HERO) != 0)
     {
-        ((Hero *) a.node).contact &= (~DOWN);
+        if ((b.categoryBitMask & GROUND) != 0)
+        {
+            ((Hero *) a.node).contact &= (~DOWN);
+        }
+        else if ((b.categoryBitMask & WALL) != 0)
+        {
+            ((Hero *) a.node).contact &=
+            ~(a.node.position.x < b.node.position.x ? RIGHT : LEFT) ;
+        }
     }
 }
 
