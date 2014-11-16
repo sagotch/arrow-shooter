@@ -261,7 +261,12 @@
     else
     { a = contact.bodyB; b = contact.bodyA; }
     
-    if ((a.categoryBitMask & HERO) != 0)
+    if ((a.categoryBitMask & OUT_OF_BOUNDS) != 0)
+    {
+        NSLog(@"delete") ;
+        [b.node removeFromParent] ;
+    }
+    else if ((a.categoryBitMask & HERO) != 0)
     {
         if ((b.categoryBitMask & GROUND) != 0)
         {
@@ -349,7 +354,7 @@
     Ground * floor = [[Ground alloc] initWithWidth:self.size.width] ;
     Wall * lwall = [[Wall alloc] initWithHeight:self.size.height] ;
     Wall * rwall = [[Wall alloc] initWithHeight:self.size.height] ;
- //TODO: Do not use Ground for roof...
+    //TODO: Do not use Ground for roof...
     Ground * roof = [[Ground alloc] initWithWidth:self.size.width] ;
     floor.position = CGPointMake(self.size.width / 2, 0) ;
     lwall.position = CGPointMake(0, self.size.height / 2) ;
@@ -359,6 +364,18 @@
     [self addChild:lwall];
     [self addChild:rwall];
     [self addChild:roof];
+    
+    // TODO: Find better than setting a 10 px margin manually
+    SKNode * bounds = [[SKNode alloc] init] ;
+    bounds.physicsBody =
+    [SKPhysicsBody bodyWithEdgeLoopFromRect:
+                          CGRectMake(-1, -1, self.frame.size.width + 20, self.frame.size.height + 20) ] ;
+    bounds.position = CGPointMake(-10, -10) ;
+    bounds.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
+    bounds.physicsBody.contactTestBitMask = ~0;
+    bounds.physicsBody.collisionBitMask = ~0;
+    [self addChild:bounds] ;
+    
 }
 
 -(void)setupLevel
