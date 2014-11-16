@@ -25,8 +25,6 @@ enum direction {
     DOWN  = 0x1 << 4
 };
 
-
-
 // CHARACTERS
 
 @class Projectile ; // Forward declaration for throwProjectile method.
@@ -86,5 +84,8 @@ enum direction {
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 @property Hero * hero ;
 @property Enemy * enemy ;
+//Hud
+@property SKLabelNode * heroHealth ;
+@property SKLabelNode * enemyHealth ;
 @property NSDate * start ;
 @end

@@ -332,6 +332,7 @@
     /* Add bounds */
     [self setupBounds] ;
     [self setupLevel] ;
+    [self setupHud] ;
     
 }
 
@@ -370,6 +371,28 @@
     trap.position = CGPointMake(0, self.size.height);
     [trap activate] ;
     [self addChild:trap] ;
+}
+
+-(void)updateHud
+{
+    self.heroHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.hero.health] ;
+    self.enemyHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.enemy.health] ;
+}
+
+-(void)setupHud
+{
+    self.heroHealth = [SKLabelNode labelNodeWithText:@"100%"];
+    self.heroHealth.fontColor = [SKColor blueColor] ;
+    self.heroHealth.text = @"100%%";
+    self.heroHealth.position = CGPointMake(20 + self.heroHealth.frame.size.width / 2,
+                                           self.size.height / 2 - (20 + self.heroHealth.frame.size.height / 2));
+    [self addChild: self.heroHealth] ;
+    
+    self.enemyHealth = [SKLabelNode labelNodeWithText:@"100%"];
+    self.enemyHealth.fontColor = [SKColor redColor] ;
+    self.enemyHealth.position = CGPointMake(self.size.width - (20 + self.enemyHealth.frame.size.width / 2),
+                                           self.size.height / 2 - (20 + self.enemyHealth.frame.size.height / 2));
+    [self addChild: self.enemyHealth] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
@@ -422,6 +445,8 @@
     if ((self.hero.dir & LEFT) != 0) dx = -speed ;
     else if ((self.hero.dir & RIGHT) != 0) dx = speed ;
     self.hero.physicsBody.velocity = CGVectorMake(dx, dy);
+    
+    [self updateHud] ;
     /* Called before each frame is rendered */
 }
 
