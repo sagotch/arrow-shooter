@@ -14,7 +14,8 @@ enum category {
     GROUND   = 0x1 << 3,
     ARROW    = 0x1 << 4,
     FIREBALL = 0x1 << 5,
-    WALL     = 0x1 << 6
+    WALL     = 0x1 << 6,
+    TRAP     = 0x1 << 7
 };
 
 enum direction {
@@ -63,6 +64,11 @@ enum direction {
 @end
 
 @interface Wall : Landscape
+@end
+
+@interface Trap : Landscape
+-(void) activate ;
+-(void) deactivate ;
 @end
 
 // GAMESCENE

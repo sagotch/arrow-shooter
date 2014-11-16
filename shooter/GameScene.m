@@ -30,8 +30,8 @@
     self.physicsBody.allowsRotation = NO ;
     self.physicsBody.restitution = 0 ;
     self.physicsBody.categoryBitMask = HERO ;
-    self.physicsBody.collisionBitMask = GROUND | WALL ;
-    self.physicsBody.contactTestBitMask = GROUND | WALL ;
+    self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
+    self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
     return self ;
 }
 
@@ -110,8 +110,8 @@
     self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(10, 10)] ;
     self.physicsBody.dynamic = YES ;
     self.physicsBody.categoryBitMask = ARROW ;
-    self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY | WALL;
-    self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY | WALL;
+    self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY | WALL ;
+    self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY | WALL ;
     return self ;
 }
 @end
@@ -168,6 +168,28 @@
     return self ;
 }
 
+@end
+
+// Trap
+@implementation Trap
+
+-(instancetype) initWithSize:(CGSize)size
+{
+    self = [super initWithSize:size] ;
+    self.physicsBody.categoryBitMask = TRAP ;
+    self.physicsBody.restitution = 1 ;
+    return self ;
+}
+
+-(void) activate
+{
+    [self runAction:[SKAction repeatActionForever:[SKAction rotateByAngle:12. duration:1]]] ;
+}
+
+-(void) deactivate
+{
+    [self removeAllActions] ;
+}
 @end
 
 // GameScene
@@ -274,9 +296,18 @@
     platform.position = CGPointMake(200, 200) ;
     [self addChild:platform] ;
     
-    Wall * wall = [[Wall alloc] initWithHeight:300] ;
-    wall.position = CGPointMake(600, 200) ;
+    Wall * wall = [[Wall alloc] initWithHeight:350] ;
+    wall.position = CGPointMake(600, 175) ;
     [self addChild:wall] ;
+    
+    Wall * wall2 = [[Wall alloc] initWithHeight:200] ;
+    wall2.position = CGPointMake(300, self.size.height - 100) ;
+    [self addChild:wall2] ;
+    
+    Trap * trap = [[Trap alloc] initWithSize:CGSizeMake(100, 100)] ;
+    trap.position = CGPointMake(0, self.size.height);
+    [trap activate] ;
+    [self addChild:trap] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
