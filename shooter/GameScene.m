@@ -233,7 +233,13 @@
     self = [super initWithSize:size] ;
     self.physicsBody.categoryBitMask = TRAP ;
     self.physicsBody.restitution = 1 ;
+    self.damage = 10 ;
     return self ;
+}
+
+-(void)hitCharacter:(Character *)c
+{
+    c.health -= self.damage ;
 }
 
 -(void) activate
@@ -281,6 +287,10 @@
         {
             [((FireBall *) b.node) hitCharacter:(Character *)a.node] ;
             [b.node removeFromParent] ;
+        }
+        else if ((b.categoryBitMask & TRAP) != 0)
+        {
+            [((Trap *) b.node) hitCharacter:(Character *)a.node] ;
         }
     }
     else if ((a.categoryBitMask & ENEMY) != 0)

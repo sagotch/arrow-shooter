@@ -76,6 +76,8 @@ enum direction {
 @end
 
 @interface Trap : Landscape
+@property float damage ;
+-(void)hitCharacter:(Character *)c ;
 -(void) activate ;
 -(void) deactivate ;
 @end
