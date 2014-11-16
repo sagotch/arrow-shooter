@@ -32,6 +32,7 @@
     self.physicsBody.categoryBitMask = HERO ;
     self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
     self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
+    self.health = 100 ;
     return self ;
 }
 
@@ -70,6 +71,7 @@
     self.physicsBody.categoryBitMask = ENEMY ;
     self.physicsBody.collisionBitMask = 0 ;
     self.physicsBody.contactTestBitMask = 0 ;
+    self.health = 100 ;
     return self ;
 }
 
@@ -92,7 +94,13 @@
 {
     self = [super initWithColor:color size:size] ;
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
+    self.damage = 0 ;
     return self ;
+}
+
+-(void)hitCharacter:(Character *)c
+{
+    c.health -= self.damage ;
 }
 
 -(void)fire :(CGPoint)from :(CGVector)toward
@@ -112,6 +120,7 @@
     self.physicsBody.categoryBitMask = ARROW ;
     self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY | WALL ;
     self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY | WALL ;
+    self.damage = 5 ;
     return self ;
 }
 @end
@@ -126,6 +135,7 @@
     self.physicsBody.categoryBitMask = FIREBALL ;
     self.physicsBody.collisionBitMask = HERO ;
     self.physicsBody.contactTestBitMask = HERO ;
+    self.damage = 15 ;
     return self ;
 }
 @end
@@ -216,6 +226,17 @@
         {
             ((Hero *) a.node).contact |=
             (a.node.position.x < b.node.position.x ? RIGHT : LEFT) ;
+        }
+        else if ((b.categoryBitMask & FIREBALL) != 0)
+        {
+            [((FireBall *) b.node) hitCharacter:(Character *)a.node] ;
+        }
+    }
+    else if ((a.categoryBitMask & ENEMY) != 0)
+    {
+        if ((b.categoryBitMask & ARROW) != 0)
+        {
+            [((Arrow *) b.node) hitCharacter:(Character *)a.node] ;
         }
     }
 }
@@ -343,7 +364,17 @@
     }
 }
 
+-(void) gameOver
+{
+    BOOL success = self.hero.health > 0 ;
+    NSLog(@"Won:%d", success);
+    exit (EXIT_SUCCESS) ;
+}
+
 -(void)update:(CFTimeInterval)currentTime {
+    if (self.hero.health <= 0 || self.enemy.health <= 0)
+        [self gameOver] ;
+
     float speed = 400 ;
     float dx = 0;
     float dy = self.hero.physicsBody.velocity.dy ;

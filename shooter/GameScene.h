@@ -29,6 +29,7 @@ enum direction {
 // CHARACTERS
 
 @interface Character : SKSpriteNode
+@property float health ;
 -(void)attack:(CGPoint)that;
 @end
 
@@ -46,7 +47,9 @@ enum direction {
 // PROJECTILES
 
 @interface Projectile : SKSpriteNode
+@property float damage ;
 -(void) fire :(CGPoint)from :(CGVector)toward;
+-(void)hitCharacter:(Character *)c ;
 @end
 
 @interface Arrow : Projectile
