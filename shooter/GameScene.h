@@ -28,12 +28,15 @@ enum direction {
 // CHARACTERS
 
 @interface Character : SKSpriteNode
+-(void)attack:(CGPoint)that;
 @end
 
 @interface Hero : Character
 @property int dir ;
 @property int contact ;
+@property NSDate* chargeStart ;
 -(void) jump ;
+-(void) charge ;
 @end
 
 @interface Enemy : Character

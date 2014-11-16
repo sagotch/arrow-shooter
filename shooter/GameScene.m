@@ -44,6 +44,22 @@
     }
 }
 
+-(void)charge
+{
+    self.chargeStart = [NSDate date] ;
+}
+
+-(void)attack:(CGPoint)that
+{
+    float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
+    CGVector v = CGVectorMake(that.x - self.position.x, that.y - self.position.y) ;
+    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 500 * charge) ;
+    
+    Arrow * a = [[Arrow alloc] init];
+    [a fire:self.position :v];
+    [self.parent addChild:a] ;
+}
+
 @end
 
 @implementation Enemy
@@ -55,6 +71,16 @@
     self.physicsBody.collisionBitMask = 0 ;
     self.physicsBody.contactTestBitMask = 0 ;
     return self ;
+}
+
+-(void)attack:(CGPoint)that
+{
+    CGVector v = CGVectorMake((that.x - self.position.x),
+                              (that.y - self.position.y)) ;
+    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 750) ;
+    FireBall * f = [[FireBall alloc] init];
+    [f fire:self.position :v];
+    [self.parent addChild:f] ;
 }
 @end
 
@@ -74,6 +100,7 @@
     self.position = from ;
     self.physicsBody.velocity = toward ;
 }
+
 @end
 
 // Arrow
@@ -94,7 +121,8 @@
 -(instancetype)init
 {
     self = [super initWithColor:[NSColor redColor] size:CGSizeMake(10, 10)] ;
-    self.physicsBody.dynamic = NO ;
+    self.physicsBody.dynamic = YES ;
+    self.physicsBody.affectedByGravity = NO ;
     self.physicsBody.categoryBitMask = FIREBALL ;
     self.physicsBody.collisionBitMask = HERO ;
     self.physicsBody.contactTestBitMask = HERO ;
@@ -208,6 +236,15 @@
     self.enemy.position = CGPointMake(800, 300);
     [self addChild:self.enemy];
     
+    [self.enemy runAction:
+     [SKAction repeatActionForever:
+      [SKAction sequence:
+       @[[SKAction waitForDuration:1],
+         [SKAction runBlock:^{[self.enemy attack:self.hero.position];}]]
+       ]
+      ]
+     ];
+    
     /* Add bounds */
     [self setupBounds] ;
     [self setupLevel] ;
@@ -243,20 +280,11 @@
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
-    self.start = [NSDate date] ;
-    }
+    [self.hero charge] ;
+}
 
 -(void)mouseUp:(NSEvent *)theEvent {
-    NSLog(@"FIRE") ;
-    float charge = fmin(3, 1 + 2 * fabsf([self.start timeIntervalSinceNow])) ;
-    CGPoint location = [theEvent locationInNode:self];
-    CGVector v = CGVectorMake((location.x - self.hero.position.x),
-                              (location.y - self.hero.position.y)) ;
-    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 500 * charge) ;
-    
-    Arrow * a = [[Arrow alloc] init];
-    [a fire:self.hero.position :v];
-    [self addChild:a] ;
+    [self.hero attack:[theEvent locationInNode:self]] ;
 }
 
 
