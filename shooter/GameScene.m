@@ -324,7 +324,7 @@
     self.enemy.position = CGPointMake(800, 300);
     [self addChild:self.enemy];
     [self.enemy keepMovingInBounds :self.size.width / 2 + self.enemy.size.width / 2
-                                   :self.size.height / 2 + self.enemy.size.heigh / 2
+                                   :self.size.height / 2 + self.enemy.size.height / 2
                                    :self.size.width - self.enemy.size.width / 2
                                    :self.size.height - self.enemy.size.height / 2] ;
     [self.enemy keepAttackingCharacter:self.hero] ;
