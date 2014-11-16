@@ -48,6 +48,7 @@ enum direction {
 
 @interface Enemy : Character
 -(void)keepAttackingCharacter:(Character *)character ;
+-(void)keepMovingInBounds:(float)xmin :(float)ymin :(float)xmax :(float)ymax;
 @end
 
 // PROJECTILES

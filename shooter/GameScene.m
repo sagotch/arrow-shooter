@@ -84,6 +84,22 @@
     return self ;
 }
 
+-(void)keepMovingInBounds:(float)xmin :(float)ymin :(float)xmax :(float)ymax
+{
+    [self runAction:
+     [SKAction repeatActionForever:
+      [SKAction sequence:
+       @[[SKAction waitForDuration:1],
+         [SKAction runBlock:^{
+          int x = arc4random_uniform(xmax - xmin);
+          int y = arc4random_uniform(ymax - ymin);
+          [self runAction: [SKAction moveTo:CGPointMake(xmin + x, ymin + y) duration:1]];}],
+         [SKAction waitForDuration:1]]
+       ]
+      ]
+     ];
+}
+
 -(void)attackPoint:(CGPoint)point
 {
     [super throwProjectile:[[FireBall alloc] init] withForce:750 toward:point] ;
@@ -307,11 +323,15 @@
     self.enemy = [[Enemy alloc] init] ;
     self.enemy.position = CGPointMake(800, 300);
     [self addChild:self.enemy];
+    [self.enemy keepMovingInBounds :self.size.width / 2 + self.enemy.size.width / 2
+                                   :self.size.height / 2 + self.enemy.size.heigh / 2
+                                   :self.size.width - self.enemy.size.width / 2
+                                   :self.size.height - self.enemy.size.height / 2] ;
     [self.enemy keepAttackingCharacter:self.hero] ;
-
-      /* Add bounds */
-      [self setupBounds] ;
-      [self setupLevel] ;
+    
+    /* Add bounds */
+    [self setupBounds] ;
+    [self setupLevel] ;
     
 }
 
