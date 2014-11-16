@@ -17,6 +17,15 @@
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
     return self ;
 }
+
+-(void)throwProjectile:(Projectile *)projectile withForce:(float)force toward:(CGPoint)point
+{
+    CGVector v = CGVectorMake(point.x - self.position.x, point.y - self.position.y) ;
+    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), force) ;
+    [projectile fire:self.position :v] ;
+    [self.parent addChild:projectile] ;
+}
+
 @end
 
 // Hero
@@ -50,15 +59,15 @@
     self.chargeStart = [NSDate date] ;
 }
 
--(void)attack:(CGPoint)that
+-(void)attackPoint:(CGPoint)point
 {
     float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
-    CGVector v = CGVectorMake(that.x - self.position.x, that.y - self.position.y) ;
-    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 500 * charge) ;
-    
-    Arrow * a = [[Arrow alloc] init];
-    [a fire:self.position :v];
-    [self.parent addChild:a] ;
+    [super throwProjectile:[[Arrow alloc] init] withForce:(500 * charge) toward:point] ;
+}
+
+-(void)attackCharacter:(Character *)character
+{
+    [self attackPoint:character.position] ;
 }
 
 @end
@@ -75,15 +84,35 @@
     return self ;
 }
 
--(void)attack:(CGPoint)that
+-(void)attackPoint:(CGPoint)point
 {
-    CGVector v = CGVectorMake((that.x - self.position.x),
-                              (that.y - self.position.y)) ;
-    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), 750) ;
-    FireBall * f = [[FireBall alloc] init];
-    [f fire:self.position :v];
-    [self.parent addChild:f] ;
+    [super throwProjectile:[[FireBall alloc] init] withForce:750 toward:point] ;
 }
+
+-(void)attackCharacter:(Character *)character
+{
+    [self attackPoint:character.position];
+}
+
+-(void)keepAttackingCharacter:(Character *)character
+{
+    [self runAction:
+     [SKAction sequence:
+      @[[SKAction repeatAction:
+         [SKAction sequence:
+          @[[SKAction waitForDuration:self.health / 100],
+            [SKAction runBlock:^{[self attackCharacter:character];}]
+            ]
+          ]
+                         count:5
+         ],
+        [SKAction waitForDuration:1]
+        ]
+      ]
+         completion:^{[self keepAttackingCharacter:character] ;}
+     ];
+}
+
 @end
 
 // Projectile
@@ -273,24 +302,16 @@
     self.hero = [[Hero alloc] init] ;
     self.hero.position = CGPointMake(300, 300);
     [self addChild:self.hero];
-
+    
     /* Enemy setup */
     self.enemy = [[Enemy alloc] init] ;
     self.enemy.position = CGPointMake(800, 300);
     [self addChild:self.enemy];
-    
-    [self.enemy runAction:
-     [SKAction repeatActionForever:
-      [SKAction sequence:
-       @[[SKAction waitForDuration:1],
-         [SKAction runBlock:^{[self.enemy attack:self.hero.position];}]]
-       ]
-      ]
-     ];
-    
-    /* Add bounds */
-    [self setupBounds] ;
-    [self setupLevel] ;
+    [self.enemy keepAttackingCharacter:self.hero] ;
+
+      /* Add bounds */
+      [self setupBounds] ;
+      [self setupLevel] ;
     
 }
 
@@ -336,7 +357,7 @@
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
-    [self.hero attack:[theEvent locationInNode:self]] ;
+    [self.hero attackPoint:[theEvent locationInNode:self]] ;
 }
 
 

@@ -26,11 +26,16 @@ enum direction {
 };
 
 
+
 // CHARACTERS
+
+@class Projectile ; // Forward declaration for throwProjectile method.
 
 @interface Character : SKSpriteNode
 @property float health ;
--(void)attack:(CGPoint)that;
+-(void)attackPoint:(CGPoint)point;
+-(void)attackCharacter:(Character *)character ;
+-(void)throwProjectile:(Projectile *)projectile withForce:(float)force toward:(CGPoint)point ;
 @end
 
 @interface Hero : Character
@@ -42,6 +47,7 @@ enum direction {
 @end
 
 @interface Enemy : Character
+-(void)keepAttackingCharacter:(Character *)character ;
 @end
 
 // PROJECTILES
