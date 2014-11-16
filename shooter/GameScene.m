@@ -275,6 +275,7 @@
         else if ((b.categoryBitMask & FIREBALL) != 0)
         {
             [((FireBall *) b.node) hitCharacter:(Character *)a.node] ;
+            [b.node removeFromParent] ;
         }
     }
     else if ((a.categoryBitMask & ENEMY) != 0)
@@ -282,7 +283,14 @@
         if ((b.categoryBitMask & ARROW) != 0)
         {
             [((Arrow *) b.node) hitCharacter:(Character *)a.node] ;
+            [b.node removeFromParent] ;
         }
+    }
+    else if ((((a.categoryBitMask & WALL) != 0)
+              || (a.categoryBitMask & GROUND) != 0)
+             && (b.categoryBitMask & ARROW) != 0)
+    {
+        [b.node removeFromParent] ;
     }
 }
 

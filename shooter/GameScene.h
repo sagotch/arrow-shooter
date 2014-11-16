@@ -12,10 +12,10 @@ enum category {
     ENEMY    = 0x1 << 1,
     HERO     = 0x1 << 2,
     GROUND   = 0x1 << 3,
-    ARROW    = 0x1 << 4,
-    FIREBALL = 0x1 << 5,
-    WALL     = 0x1 << 6,
-    TRAP     = 0x1 << 7
+    WALL     = 0x1 << 4,
+    TRAP     = 0x1 << 5,
+    ARROW    = 0x1 << 6,
+    FIREBALL = 0x1 << 7
 };
 
 enum direction {
