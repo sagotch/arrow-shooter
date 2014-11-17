@@ -49,7 +49,8 @@
     self.physicsBody.categoryBitMask = HERO ;
     self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
     self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
-    self.health = 100 ;
+    self.maxHealth = 100 ;
+    self.health = self.maxHealth ;
     return self ;
 }
 
@@ -89,7 +90,8 @@
     self.physicsBody.categoryBitMask = ENEMY ;
     self.physicsBody.collisionBitMask = 0 ;
     self.physicsBody.contactTestBitMask = 0 ;
-    self.health = 100 ;
+    self.maxHealth = 100 ;
+    self.health = self.maxHealth ;
     return self ;
 }
 

@@ -24,4 +24,5 @@
 @property SKLabelNode * enemyHealth ;
 @property NSDate * start ;
 @property SKNode * sound ;
+@property float lastPowerUpPop ;
 @end

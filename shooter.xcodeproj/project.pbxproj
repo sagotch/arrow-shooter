@@ -10,6 +10,8 @@
 		8B3117BB1A1A269A009B5F72 /* arrow-fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117BA1A1A269A009B5F72 /* arrow-fire.wav */; };
 		8B3117BD1A1A26D6009B5F72 /* arrow-hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117BC1A1A26D6009B5F72 /* arrow-hit.wav */; };
 		8B3117C11A1A2AB6009B5F72 /* fireball-fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117C01A1A2AB6009B5F72 /* fireball-fire.wav */; };
+		8B3117C41A1A3415009B5F72 /* PowerUp.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3117C31A1A3415009B5F72 /* PowerUp.m */; };
+		8B3117C61A1A429A009B5F72 /* healthpack-powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117C51A1A429A009B5F72 /* healthpack-powerup.wav */; };
 		8B488DE01A19DB6100116E11 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DDF1A19DB6100116E11 /* Character.m */; };
 		8B488DE31A19DC5300116E11 /* Projectile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DE21A19DC5300116E11 /* Projectile.m */; };
 		8B488DE71A19DD2800116E11 /* Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DE61A19DD2800116E11 /* Landscape.m */; };
@@ -37,6 +39,9 @@
 		8B3117BA1A1A269A009B5F72 /* arrow-fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "arrow-fire.wav"; sourceTree = "<group>"; };
 		8B3117BC1A1A26D6009B5F72 /* arrow-hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "arrow-hit.wav"; sourceTree = "<group>"; };
 		8B3117C01A1A2AB6009B5F72 /* fireball-fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "fireball-fire.wav"; sourceTree = "<group>"; };
+		8B3117C21A1A3415009B5F72 /* PowerUp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerUp.h; sourceTree = "<group>"; };
+		8B3117C31A1A3415009B5F72 /* PowerUp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PowerUp.m; sourceTree = "<group>"; };
+		8B3117C51A1A429A009B5F72 /* healthpack-powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "healthpack-powerup.wav"; sourceTree = "<group>"; };
 		8B488DDE1A19DB6100116E11 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
 		8B488DDF1A19DB6100116E11 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Character.m; sourceTree = "<group>"; };
 		8B488DE11A19DC5300116E11 /* Projectile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Projectile.h; sourceTree = "<group>"; };
@@ -80,6 +85,7 @@
 		8B038C771A19F4F900351FCF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8B3117C51A1A429A009B5F72 /* healthpack-powerup.wav */,
 				8B3117C01A1A2AB6009B5F72 /* fireball-fire.wav */,
 				8B3117BC1A1A26D6009B5F72 /* arrow-hit.wav */,
 				8B3117BA1A1A269A009B5F72 /* arrow-fire.wav */,
@@ -120,6 +126,8 @@
 				8B488DE61A19DD2800116E11 /* Landscape.m */,
 				8B8D6F721A14C9AF009F9915 /* GameScene.h */,
 				8B8D6F731A14C9AF009F9915 /* GameScene.m */,
+				8B3117C21A1A3415009B5F72 /* PowerUp.h */,
+				8B3117C31A1A3415009B5F72 /* PowerUp.m */,
 				8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */,
 				8B8D6F771A14C9AF009F9915 /* Images.xcassets */,
 				8B8D6F751A14C9AF009F9915 /* GameScene.sks */,
@@ -235,6 +243,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3117C61A1A429A009B5F72 /* healthpack-powerup.wav in Resources */,
 				8B8D6F761A14C9AF009F9915 /* GameScene.sks in Resources */,
 				8B3117BD1A1A26D6009B5F72 /* arrow-hit.wav in Resources */,
 				8B3117C11A1A2AB6009B5F72 /* fireball-fire.wav in Resources */,
@@ -264,6 +273,7 @@
 				8B488DE71A19DD2800116E11 /* Landscape.m in Sources */,
 				8B488DE01A19DB6100116E11 /* Character.m in Sources */,
 				8B488DE31A19DC5300116E11 /* Projectile.m in Sources */,
+				8B3117C41A1A3415009B5F72 /* PowerUp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

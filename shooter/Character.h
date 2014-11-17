@@ -11,6 +11,7 @@
 @class Projectile ;
 
 @interface Character : SKSpriteNode
+@property float maxHealth ;
 @property float health ;
 -(void)attackPoint:(CGPoint)point;
 -(void) bleed ;

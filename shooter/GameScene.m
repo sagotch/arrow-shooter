@@ -11,6 +11,7 @@
 #import "Character.h"
 #import "Projectile.h"
 #import "Landscape.h"
+#import "PowerUp.h"
 
 @implementation GameScene
 
@@ -47,6 +48,11 @@
         else if ((b.categoryBitMask & TRAP) != 0)
         {
             [((Trap *) b.node) hitCharacter:(Character *)a.node] ;
+        }
+        else if ((b.categoryBitMask & POWERUP) != 0)
+        {
+            [((PowerUp *) b.node) powerUpCharacter:(Character *)a.node] ;
+            [b.node removeFromParent] ;
         }
     }
     else if ((a.categoryBitMask & ENEMY) != 0)
@@ -88,6 +94,16 @@
     }
 }
 
+
+-(void)spawnPowerUp
+{
+    HealthPack * p = [[HealthPack alloc] init] ;
+    p.position = CGPointMake(self.size.width / 2 + arc4random_uniform(self.size.width / 2),
+                             self.size.height);
+    [self addChild:p] ;
+    [p runAction:[SKAction repeatActionForever:[SKAction moveByX:0 y:-50 duration:1]]] ;
+}
+
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
     /* Setup your scene here */
@@ -113,6 +129,8 @@
     [self setupLevel] ;
     [self setupHud] ;
     
+    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction waitForDuration:20],
+                                                                       [SKAction runBlock:^{[self spawnPowerUp];}]]]]];
 }
 
 -(void) setupBounds
@@ -169,6 +187,7 @@
     self.heroHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.hero.health] ;
     self.enemyHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.enemy.health] ;
 }
+
 
 -(void)setupHud
 {

@@ -17,7 +17,8 @@ enum category {
     WALL          = 0x1 << 5,
     TRAP          = 0x1 << 6,
     ARROW         = 0x1 << 7,
-    FIREBALL      = 0x1 << 8
+    FIREBALL      = 0x1 << 8,
+    POWERUP       = 0x1 << 9
 };
 
 enum direction {
