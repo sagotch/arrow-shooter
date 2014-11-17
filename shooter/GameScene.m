@@ -247,15 +247,6 @@
     self.enemyHealth.position = CGPointMake(self.size.width - (20 + self.enemyHealth.frame.size.width / 2),
                                            self.size.height / 2 - (20 + self.enemyHealth.frame.size.height / 2));
     [self addChild: self.enemyHealth] ;
-    
-    SKLabelNode * usage = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"] ;
-    usage.fontSize = 40 ;
-    usage.fontColor = [SKColor whiteColor] ;
-    usage.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter ;
-    usage.text = @"Move with A(←), D(→), W(↑)." ;
-    usage.position =  CGPointMake(self.size.width / 2, self.size.height / 2) ;
-    [self addChild:usage] ;
-    
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {

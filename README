@@ -22,6 +22,8 @@ about walls or gravity.
 
 The ghost may move in the right hand side half of the scene.
 
+When a ghost get hurt, he fires more ball and more quickly.
+
 == Powerup ==
 
 Every 20 seconds, a health pack will fall from the sky.
