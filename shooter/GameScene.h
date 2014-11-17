@@ -17,12 +17,15 @@
 // GAMESCENE
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
+
 @property Hero * hero ;
 @property Enemy * enemy ;
+
 //Hud
 @property SKLabelNode * heroHealth ;
 @property SKLabelNode * enemyHealth ;
-@property NSDate * start ;
-@property SKNode * sound ;
-@property float lastPowerUpPop ;
+
+@property NSDate * startTime ;
+@property NSString * scoreDir ;
+@property NSString * scoreFile ;
 @end

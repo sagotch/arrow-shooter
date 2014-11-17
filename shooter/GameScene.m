@@ -16,6 +16,35 @@
 @implementation GameScene
 
 
+-(NSString *)gameStatus
+{
+    NSDate * date = [NSDate date] ;
+    return [NSString stringWithFormat:@"%@ | %d seconds (%d health points).\n",
+            [[date description] substringToIndex:18],
+            (int)[date timeIntervalSinceDate:self.startTime],
+            (int)self.hero.health] ;
+}
+
+-(void)saveScore:(NSString *) status
+{
+    [[NSFileManager defaultManager] createDirectoryAtPath:self.scoreDir
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:nil] ;
+    
+    NSFileHandle * f = [NSFileHandle fileHandleForWritingAtPath:self.scoreFile];
+    
+    if(f == nil) {
+        
+        [[NSFileManager defaultManager] createFileAtPath:self.scoreFile contents:nil attributes:nil];
+        f = [NSFileHandle fileHandleForWritingAtPath:self.scoreFile];
+    }
+    
+    [f seekToEndOfFile];
+    [f writeData:[status dataUsingEncoding:NSUTF8StringEncoding]];
+    [f closeFile];
+}
+
 - (void) didBeginContact:(SKPhysicsContact *)contact
 {
     SKPhysicsBody * a, * b;
@@ -131,6 +160,18 @@
     
     [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction waitForDuration:20],
                                                                        [SKAction runBlock:^{[self spawnPowerUp];}]]]]];
+    
+    self.scoreDir = [NSString stringWithFormat:@"%@/%@",
+                     [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+                                                          NSUserDomainMask,
+                                                          YES)
+                      firstObject],
+                     @"arrow-shooter"];
+    
+    self.scoreFile = [NSString stringWithFormat:@"%@/%@",
+                      self.scoreDir,
+                      @"arrow-shooter.score"] ;
+    self.startTime = [NSDate date] ;
 }
 
 -(void) setupBounds
@@ -252,8 +293,10 @@
 
 -(void) gameOver
 {
+    NSString * status = [self gameStatus] ;
     NSAlert * alert = [[NSAlert alloc] init] ;
-    alert.informativeText = (self.hero.health > 0) ? @"YOU WON!" : @"YOU LOOSE!" ;
+    alert.informativeText = [NSString stringWithFormat:@"Saving %@ in %@", status, self.scoreFile] ;
+    [self saveScore:status] ;
     [alert runModal] ;
     exit (EXIT_SUCCESS) ;
 }
