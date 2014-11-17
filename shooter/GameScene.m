@@ -103,7 +103,7 @@
     self.enemy.position = CGPointMake(800, 300);
     [self addChild:self.enemy];
     [self.enemy keepMovingInBounds :self.size.width / 2 + self.enemy.size.width / 2
-                                   :self.size.height / 2 + self.enemy.size.height / 2
+                                   :self.enemy.size.height / 2
                                    :self.size.width - self.enemy.size.width / 2
                                    :self.size.height - self.enemy.size.height / 2] ;
     [self.enemy keepAttackingCharacter:self.hero] ;
@@ -135,7 +135,7 @@
     SKNode * bounds = [[SKNode alloc] init] ;
     bounds.physicsBody =
     [SKPhysicsBody bodyWithEdgeLoopFromRect:
-                          CGRectMake(-1, -1, self.frame.size.width + 20, self.frame.size.height + 20) ] ;
+                          CGRectMake(0, 0, self.frame.size.width + 20, self.frame.size.height + 20) ] ;
     bounds.position = CGPointMake(-10, -10) ;
     bounds.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
     bounds.physicsBody.contactTestBitMask = ~0;
