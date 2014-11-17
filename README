@@ -1,0 +1,29 @@
+= Arrow Shooter =
+
+A fantastic game by Julien Sagot, aka sagotch.
+
+== Movement ==
+
+Use W to go left, D to go right.
+W allows you to jump. Consider doing wall jumps.
+
+== Shoot ==
+
+Use mouse to aim your target.
+Push left button to start loading you shot.
+Release it to fire. The more you stay pressing the left button,
+the more your arrow will be fired powerfully.
+
+== The enemy ==
+
+The enemy is a ghost shooting magical fire balls.
+You will quickly notice that nor the ghost, nor the fire balls care
+about walls or gravity.
+
+The ghost may move in the right hand side half of the scene.
+
+== Powerup ==
+
+Every 20 seconds, a health pack will fall from the sky.
+Note that it will always appears in the ghost area of action,
+so you will need to be brave to regain health.
