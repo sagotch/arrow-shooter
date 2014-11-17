@@ -129,7 +129,7 @@
             [SKAction runBlock:^{[self attackCharacter:character];}]
             ]
           ]
-                         count:5
+                         count:(10 - self.health / 20)
          ],
         [SKAction waitForDuration:1]
         ]

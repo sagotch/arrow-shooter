@@ -63,6 +63,7 @@
 -(void)hitCharacter:(Character *)c
 {
     c.health -= self.damage ;
+    [c bleed] ;
 }
 
 -(void) activate
