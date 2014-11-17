@@ -233,8 +233,9 @@
 
 -(void) gameOver
 {
-    BOOL success = self.hero.health > 0 ;
-    NSLog(@"Won:%d", success);
+    NSAlert * alert = [[NSAlert alloc] init] ;
+    alert.informativeText = (self.hero.health > 0) ? @"YOU WON!" : @"YOU LOOSE!" ;
+    [alert runModal] ;
     exit (EXIT_SUCCESS) ;
 }
 
