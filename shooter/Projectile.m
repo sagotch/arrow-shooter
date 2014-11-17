@@ -24,6 +24,7 @@
 -(void)hitCharacter:(Character *)c
 {
     c.health -= self.damage ;
+    [c bleed] ;
 }
 
 -(void)fire :(CGPoint)from :(CGVector)toward

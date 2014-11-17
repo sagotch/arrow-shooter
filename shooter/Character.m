@@ -28,6 +28,12 @@
     [self.parent addChild:projectile] ;
 }
 
+-(void) bleed
+{
+    [self runAction:[SKAction repeatAction:[SKAction sequence:@[[SKAction fadeAlphaTo:0 duration:0.1],
+                                                                [SKAction fadeAlphaTo:1 duration:0.1]]] count:3]] ;
+}
+
 @end
 
 // Hero
@@ -71,6 +77,7 @@
 {
     [self attackPoint:character.position] ;
 }
+
 
 @end
 

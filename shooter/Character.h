@@ -13,6 +13,7 @@
 @interface Character : SKSpriteNode
 @property float health ;
 -(void)attackPoint:(CGPoint)point;
+-(void) bleed ;
 -(void)attackCharacter:(Character *)character ;
 -(void)throwProjectile:(Projectile *)projectile withForce:(float)force toward:(CGPoint)point ;
 @end
