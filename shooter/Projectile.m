@@ -10,6 +10,7 @@
 #import "Projectile.h"
 #import "BitMask.h"
 #import "Character.h"
+#import "CGVectorAdditions.h"
 
 @implementation Projectile
 
@@ -60,6 +61,27 @@
 -(void)fire:(CGPoint)from :(CGVector)toward
 {
     [super fire:from :toward];
+}
+
+@end
+
+// SuperArrow
+@implementation SuperArrow
+-(instancetype)init
+{
+    self = [super init] ;
+    self.physicsBody.dynamic = YES ;
+    self.physicsBody.affectedByGravity = NO ;
+    self.physicsBody.categoryBitMask = ARROW ;
+    self.physicsBody.collisionBitMask =  ENEMY ;
+    self.physicsBody.contactTestBitMask = ENEMY ;
+    self.damage = 10 ;
+    self.soundFire = @"arrow-fire.wav" ;
+    return self ;
+}
+-(void)fire:(CGPoint)from :(CGVector)toward
+{
+    [super fire:from :CGVectorMultiplyByScalar(toward, 2)] ;
 }
 
 @end

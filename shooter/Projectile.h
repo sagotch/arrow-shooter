@@ -21,6 +21,9 @@
 -(instancetype)init ;
 @end
 
+@interface SuperArrow : Arrow
+@end
+
 @interface FireBall : Projectile
 -(instancetype)init ;
 @end
