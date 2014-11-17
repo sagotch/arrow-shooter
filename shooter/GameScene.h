@@ -23,4 +23,5 @@
 @property SKLabelNode * heroHealth ;
 @property SKLabelNode * enemyHealth ;
 @property NSDate * start ;
+@property SKNode * sound ;
 @end

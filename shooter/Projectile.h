@@ -11,6 +11,8 @@
 
 @interface Projectile : SKSpriteNode
 @property float damage ;
+@property NSString * soundHit ;
+@property NSString * soundFire ;
 -(void) fire :(CGPoint)from :(CGVector)toward;
 -(void)hitCharacter:(Character *)c ;
 @end

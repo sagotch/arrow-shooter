@@ -26,7 +26,6 @@
     
     if ((a.categoryBitMask & OUT_OF_BOUNDS) != 0)
     {
-        NSLog(@"delete") ;
         [b.node removeFromParent] ;
     }
     else if ((a.categoryBitMask & HERO) != 0)
