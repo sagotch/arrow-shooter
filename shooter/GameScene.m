@@ -135,6 +135,7 @@
 
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
+    self.backgroundColor = [NSColor lightGrayColor] ;
     /* Setup your scene here */
     self.physicsWorld.contactDelegate = self;
     
@@ -285,17 +286,32 @@
 -(void) gameOver
 {
     NSString * status = [self gameStatus] ;
-    NSAlert * alert = [[NSAlert alloc] init] ;
-    alert.informativeText = [NSString stringWithFormat:@"Saving %@ in %@", status, self.scoreFile] ;
     [self saveScore:status] ;
-    [alert runModal] ;
-    exit (EXIT_SUCCESS) ;
+    [self removeAllChildren] ;
+    NSAlert * alert = [NSAlert alertWithMessageText:@"Game Over"
+                                      defaultButton:@"Yes"
+                                    alternateButton:@"No"
+                                        otherButton:nil
+                          informativeTextWithFormat:[NSString stringWithFormat:@"%@\nWant to try again?",
+                                                     status]] ;
+    NSModalResponse res = [alert runModal];
+    switch (res)
+    {
+        case NSModalResponseOK:
+            [self.view presentScene:[[GameScene alloc] initWithSize:self.size]] ;
+            break;
+        default:
+            [self.view presentScene:nil] ; // FIXME? Is it enough?
+            break;
+    };
+    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     if (self.hero.health <= 0 || self.enemy.health <= 0)
+    {
         [self gameOver] ;
-
+    }
     float speed = 400 ;
     float dx = 0;
     float dy = self.hero.physicsBody.velocity.dy ;
