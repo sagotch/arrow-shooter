@@ -173,18 +173,30 @@
 
 -(void)setupHud
 {
-    self.heroHealth = [SKLabelNode labelNodeWithText:@"100%"];
+    self.heroHealth = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    self.heroHealth.fontSize = 65 ;
     self.heroHealth.fontColor = [SKColor blueColor] ;
-    self.heroHealth.text = @"100%%";
+    self.heroHealth.text = @"100%" ;
     self.heroHealth.position = CGPointMake(20 + self.heroHealth.frame.size.width / 2,
                                            self.size.height / 2 - (20 + self.heroHealth.frame.size.height / 2));
     [self addChild: self.heroHealth] ;
     
-    self.enemyHealth = [SKLabelNode labelNodeWithText:@"100%"];
+    self.enemyHealth = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    self.enemyHealth.fontSize = 65 ;
     self.enemyHealth.fontColor = [SKColor redColor] ;
+    self.enemyHealth.text = @"100%" ;
     self.enemyHealth.position = CGPointMake(self.size.width - (20 + self.enemyHealth.frame.size.width / 2),
                                            self.size.height / 2 - (20 + self.enemyHealth.frame.size.height / 2));
     [self addChild: self.enemyHealth] ;
+    
+    SKLabelNode * usage = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"] ;
+    usage.fontSize = 40 ;
+    usage.fontColor = [SKColor whiteColor] ;
+    usage.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeCenter ;
+    usage.text = @"Move with A(←), D(→), W(↑)." ;
+    usage.position =  CGPointMake(self.size.width / 2, self.size.height / 2) ;
+    [self addChild:usage] ;
+    
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
