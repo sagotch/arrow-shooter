@@ -19,7 +19,6 @@
 		8B8D6F6F1A14C9AF009F9915 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F6E1A14C9AF009F9915 /* AppDelegate.m */; };
 		8B8D6F711A14C9AF009F9915 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F701A14C9AF009F9915 /* main.m */; };
 		8B8D6F741A14C9AF009F9915 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F731A14C9AF009F9915 /* GameScene.m */; };
-		8B8D6F761A14C9AF009F9915 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F751A14C9AF009F9915 /* GameScene.sks */; };
 		8B8D6F781A14C9AF009F9915 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F771A14C9AF009F9915 /* Images.xcassets */; };
 		8B8D6F7B1A14C9AF009F9915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F791A14C9AF009F9915 /* MainMenu.xib */; };
 		8B8D6F871A14C9AF009F9915 /* shooterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F861A14C9AF009F9915 /* shooterTests.m */; };
@@ -60,7 +59,6 @@
 		8B8D6F701A14C9AF009F9915 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8B8D6F721A14C9AF009F9915 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		8B8D6F731A14C9AF009F9915 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
-		8B8D6F751A14C9AF009F9915 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8B8D6F771A14C9AF009F9915 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8B8D6F7A1A14C9AF009F9915 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8B8D6F801A14C9AF009F9915 /* shooterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = shooterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -137,7 +135,6 @@
 				8B3117C31A1A3415009B5F72 /* PowerUp.m */,
 				8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */,
 				8B8D6F771A14C9AF009F9915 /* Images.xcassets */,
-				8B8D6F751A14C9AF009F9915 /* GameScene.sks */,
 				8B8D6F791A14C9AF009F9915 /* MainMenu.xib */,
 				8B8D6F6B1A14C9AF009F9915 /* Supporting Files */,
 			);
@@ -251,7 +248,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B3117C61A1A429A009B5F72 /* healthpack-powerup.wav in Resources */,
-				8B8D6F761A14C9AF009F9915 /* GameScene.sks in Resources */,
 				8B3117BD1A1A26D6009B5F72 /* arrow-hit.wav in Resources */,
 				8B3117C11A1A2AB6009B5F72 /* fireball-fire.wav in Resources */,
 				8B8D6F781A14C9AF009F9915 /* Images.xcassets in Resources */,
