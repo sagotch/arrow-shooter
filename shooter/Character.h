@@ -23,6 +23,7 @@
 @property int dir ;
 @property int contact ;
 @property NSDate* chargeStart ;
+-(void) updateVelocity ;
 -(void) jump ;
 -(void) charge ;
 @end

@@ -13,6 +13,7 @@
 #import "Landscape.h"
 #import "PowerUp.h"
 #import "MenuAlert.h"
+#import "ScoreHistory.h"
 
 @implementation CharacterLifeMeter
 
@@ -40,34 +41,6 @@
     return self ;
 }
 
--(NSString *)gameStatus
-{
-    NSDate * date = [NSDate date] ;
-    return [NSString stringWithFormat:@"%@ | %d seconds (%d health points).\n",
-            [[date description] substringToIndex:18],
-            (int)[date timeIntervalSinceDate:self.startTime],
-            (int)self.hero.health] ;
-}
-
--(void)saveScore:(NSString *) status
-{
-    [[NSFileManager defaultManager] createDirectoryAtPath:self.scoreDir
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:nil] ;
-    
-    NSFileHandle * f = [NSFileHandle fileHandleForWritingAtPath:self.scoreFile];
-    
-    if(f == nil) {
-        
-        [[NSFileManager defaultManager] createFileAtPath:self.scoreFile contents:nil attributes:nil];
-        f = [NSFileHandle fileHandleForWritingAtPath:self.scoreFile];
-    }
-    
-    [f seekToEndOfFile];
-    [f writeData:[status dataUsingEncoding:NSUTF8StringEncoding]];
-    [f closeFile];
-}
 
 - (void) didBeginContact:(SKPhysicsContact *)contact
 {
@@ -186,16 +159,6 @@
     [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction waitForDuration:20],
                                                                        [SKAction runBlock:^{[self spawnPowerUp];}]]]]];
     
-    self.scoreDir = [NSString stringWithFormat:@"%@/%@",
-                     [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
-                                                          NSUserDomainMask,
-                                                          YES)
-                      firstObject],
-                     @"arrow-shooter"];
-    
-    self.scoreFile = [NSString stringWithFormat:@"%@/%@",
-                      self.scoreDir,
-                      @"arrow-shooter.score"] ;
     self.startTime = [NSDate date] ;
 }
 
@@ -326,23 +289,20 @@
 
 -(void) gameOver
 {
-    NSString * status = [self gameStatus] ;
-    [self saveScore:status] ;
+    NSDate * date = [NSDate date] ;
+    float time = [date timeIntervalSinceDate:self.startTime] ;
+    [[[ScoreHistory alloc ] init] saveScore:[NSDate date] :time :self.hero.health ] ;
     [self quit] ;
 }
 
--(void)update:(CFTimeInterval)currentTime {
+-(void)update:(CFTimeInterval)currentTime
+{
     if (self.hero.health <= 0 || self.enemy.health <= 0)
     {
         [self gameOver] ;
     }
-    float speed = 400 ;
-    float dx = 0;
-    float dy = self.hero.physicsBody.velocity.dy ;
-    if ((self.hero.dir & LEFT) != 0) dx = -speed ;
-    else if ((self.hero.dir & RIGHT) != 0) dx = speed ;
-    self.hero.physicsBody.velocity = CGVectorMake(dx, dy);
     
+    [self.hero updateVelocity] ;
     [self updateHud] ;
     /* Called before each frame is rendered */
 }

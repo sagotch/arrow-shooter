@@ -30,8 +30,6 @@
 @property CharacterLifeMeter * enemyHealth ;
 
 @property NSDate * startTime ;
-@property NSString * scoreDir ;
-@property NSString * scoreFile ;
 @end
 
 @interface MenuScene : SKScene

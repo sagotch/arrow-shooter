@@ -79,6 +79,20 @@
     [self attackPoint:character.position] ;
 }
 
+-(void)updateVelocity
+{
+    float speed = 400 ;
+    float dx = 0;    
+    if ((self.dir & LEFT) != 0)
+    {
+        dx = -speed ;
+    }
+    else if ((self.dir & RIGHT) != 0)
+    {
+        dx = speed ;
+    }
+    self.physicsBody.velocity = CGVectorMake(dx, self.physicsBody.velocity.dy);
+}
 
 @end
 
