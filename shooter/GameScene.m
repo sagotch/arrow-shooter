@@ -38,6 +38,9 @@
 -(instancetype)init
 {
     self = [super initWithSize:CGSizeMake(1024, 768)] ;
+    [SKAction playSoundFileNamed:@"arrow-fire.wav" waitForCompletion:NO];
+    [SKAction playSoundFileNamed:@"arrow-hit.wav" waitForCompletion:NO];
+    [SKAction playSoundFileNamed:@"fireball-fire.wav" waitForCompletion:NO];
     return self ;
 }
 
