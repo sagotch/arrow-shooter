@@ -13,6 +13,10 @@
 #import "Projectile.h"
 #import "Landscape.h"
 
+@interface CharacterLifeMeter : SKSpriteNode
+@property Character * character ;
+-(instancetype)initWithCharacter:(Character *)character ;
+@end
 
 // GAMESCENE
 
@@ -22,8 +26,8 @@
 @property Enemy * enemy ;
 
 //Hud
-@property SKLabelNode * heroHealth ;
-@property SKLabelNode * enemyHealth ;
+@property CharacterLifeMeter * heroHealth ;
+@property CharacterLifeMeter * enemyHealth ;
 
 @property NSDate * startTime ;
 @property NSString * scoreDir ;

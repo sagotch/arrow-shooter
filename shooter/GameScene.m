@@ -14,6 +14,24 @@
 #import "PowerUp.h"
 #import "MenuAlert.h"
 
+@implementation CharacterLifeMeter
+
+-(instancetype)initWithCharacter:(Character *)character
+{
+    self = [super initWithColor:[NSColor darkGrayColor] size:CGSizeMake(character.health, 5)] ;
+    self.character = character ;
+    self.position = CGPointMake(0, character.size.height / 2 + 10);
+    [character addChild:self] ;
+    return self ;
+}
+
+-(void) update
+{
+    self.size = CGSizeMake(self.character.health, 5) ;
+}
+
+@end
+
 @implementation GameScene
 
 -(instancetype)init
@@ -232,28 +250,15 @@
 
 -(void)updateHud
 {
-    self.heroHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.hero.health] ;
-    self.enemyHealth.text = [NSString stringWithFormat:@"%d%%", (int)self.enemy.health] ;
+    [self.heroHealth update] ;
+    [self.enemyHealth update] ;
 }
 
 
 -(void)setupHud
 {
-    self.heroHealth = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    self.heroHealth.fontSize = 65 ;
-    self.heroHealth.fontColor = [SKColor blueColor] ;
-    self.heroHealth.text = @"100%" ;
-    self.heroHealth.position = CGPointMake(20 + self.heroHealth.frame.size.width / 2,
-                                           self.size.height / 2 - (20 + self.heroHealth.frame.size.height / 2));
-    [self addChild: self.heroHealth] ;
-    
-    self.enemyHealth = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    self.enemyHealth.fontSize = 65 ;
-    self.enemyHealth.fontColor = [SKColor redColor] ;
-    self.enemyHealth.text = @"100%" ;
-    self.enemyHealth.position = CGPointMake(self.size.width - (20 + self.enemyHealth.frame.size.width / 2),
-                                           self.size.height / 2 - (20 + self.enemyHealth.frame.size.height / 2));
-    [self addChild: self.enemyHealth] ;
+    self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.hero] ;
+    self.enemyHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.enemy] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
