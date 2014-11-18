@@ -12,9 +12,15 @@
 #import "Projectile.h"
 #import "Landscape.h"
 #import "PowerUp.h"
+#import "MenuAlert.h"
 
 @implementation GameScene
 
+-(instancetype)init
+{
+    self = [super initWithSize:CGSizeMake(1024, 768)] ;
+    return self ;
+}
 
 -(NSString *)gameStatus
 {
@@ -258,53 +264,66 @@
     [self.hero attackPoint:[theEvent locationInNode:self]] ;
 }
 
-
 -(void)keyDown:(NSEvent *)theEvent
 {
-    switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
+    switch ([theEvent keyCode])
     {
-        case 'a':
-        {self.hero.dir |= LEFT ; break ;}
-        case 'd':
-        {self.hero.dir |= RIGHT ; break ;}
-        case 'w':
-        {[self.hero jump] ; break ;}
+        case 0:  // A
+            self.hero.dir |= LEFT ;
+            break ;
+        case 2:  // D
+            self.hero.dir |= RIGHT ;
+            break ;
+        case 13: // W
+            [self.hero jump] ;
+            break ;
+        case 53: // ESC
+            [self pause] ;
+            break;
     }
 }
 
 -(void)keyUp:(NSEvent *)theEvent
 {
-    switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0])
+    switch ([theEvent keyCode])
     {
-        case 'a':
-        {self.hero.dir &= ~LEFT ; break ;}
-        case 'd':
-        {self.hero.dir &= ~RIGHT ; break ;}
+        case 0:  // A
+            self.hero.dir &= ~LEFT ;
+            break ;
+        case 2: // D
+            self.hero.dir &= ~RIGHT ;
+            break ;
     }
+}
+
+-(void)quit
+{
+    [self removeAllChildren] ;
+    [self.view presentScene:[[MenuScene alloc] init]] ;
+}
+
+-(void)pause
+{
+    self.paused = YES ;
+    switch ([[[PausedMenuAlert alloc] init] runModal])
+    {
+        case 1000:
+            [self.view presentScene:[[GameScene alloc] initWithSize:self.size]] ;
+            break;
+        case 1001:
+            [self quit] ;
+            break;
+        default:
+            self.paused = NO ;
+            break ;
+    };
 }
 
 -(void) gameOver
 {
     NSString * status = [self gameStatus] ;
     [self saveScore:status] ;
-    [self removeAllChildren] ;
-    NSAlert * alert = [NSAlert alertWithMessageText:@"Game Over"
-                                      defaultButton:@"Yes"
-                                    alternateButton:@"No"
-                                        otherButton:nil
-                          informativeTextWithFormat:[NSString stringWithFormat:@"%@\nWant to try again?",
-                                                     status]] ;
-    NSModalResponse res = [alert runModal];
-    switch (res)
-    {
-        case NSModalResponseOK:
-            [self.view presentScene:[[GameScene alloc] initWithSize:self.size]] ;
-            break;
-        default:
-            [self.view presentScene:nil] ; // FIXME? Is it enough?
-            break;
-    };
-    
+    [self quit] ;
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -324,3 +343,23 @@
 }
 
 @end
+
+@implementation MenuScene
+
+-(void)didMoveToView:(SKView *)view
+{
+    switch ([[[MainMenuAlert alloc] init] runModal])
+    {
+        case 1000:
+            [self.view presentScene:[[GameScene alloc] init]] ;
+            break;
+        case 1001:
+            exit (EXIT_SUCCESS);
+            break;
+        default:
+            break ;
+    };
+}
+
+@end
+

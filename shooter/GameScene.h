@@ -29,3 +29,6 @@
 @property NSString * scoreDir ;
 @property NSString * scoreFile ;
 @end
+
+@interface MenuScene : SKScene
+@end

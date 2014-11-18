@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B064FFB1A1B42A30099E8B1 /* MenuAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B064FFA1A1B42A30099E8B1 /* MenuAlert.m */; };
 		8B3117BB1A1A269A009B5F72 /* arrow-fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117BA1A1A269A009B5F72 /* arrow-fire.wav */; };
 		8B3117BD1A1A26D6009B5F72 /* arrow-hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117BC1A1A26D6009B5F72 /* arrow-hit.wav */; };
 		8B3117C11A1A2AB6009B5F72 /* fireball-fire.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8B3117C01A1A2AB6009B5F72 /* fireball-fire.wav */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B064FF91A1B42A30099E8B1 /* MenuAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuAlert.h; sourceTree = "<group>"; };
+		8B064FFA1A1B42A30099E8B1 /* MenuAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuAlert.m; sourceTree = "<group>"; };
 		8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGVectorAdditions.h; sourceTree = "<group>"; };
 		8B3117BA1A1A269A009B5F72 /* arrow-fire.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "arrow-fire.wav"; sourceTree = "<group>"; };
 		8B3117BC1A1A26D6009B5F72 /* arrow-hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "arrow-hit.wav"; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				8B488DE61A19DD2800116E11 /* Landscape.m */,
 				8B8D6F721A14C9AF009F9915 /* GameScene.h */,
 				8B8D6F731A14C9AF009F9915 /* GameScene.m */,
+				8B064FF91A1B42A30099E8B1 /* MenuAlert.h */,
+				8B064FFA1A1B42A30099E8B1 /* MenuAlert.m */,
 				8B3117C21A1A3415009B5F72 /* PowerUp.h */,
 				8B3117C31A1A3415009B5F72 /* PowerUp.m */,
 				8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */,
@@ -275,6 +280,7 @@
 				8B488DE71A19DD2800116E11 /* Landscape.m in Sources */,
 				8B488DE01A19DB6100116E11 /* Character.m in Sources */,
 				8B488DE31A19DC5300116E11 /* Projectile.m in Sources */,
+				8B064FFB1A1B42A30099E8B1 /* MenuAlert.m in Sources */,
 				8B3117C41A1A3415009B5F72 /* PowerUp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
