@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level width="1024" height="720">
+    <hero x="300" y="300" />
+    <ground x="200" y="200" width="100" />
+    <wall x="600" y="175" height="350" />
+    <wall x="300" y="620" height="200" />
+    <enemy x="600" y="600" xmin="512" ymin="0" xmax="1024" ymax="720" />
+</level>

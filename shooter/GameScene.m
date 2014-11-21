@@ -14,6 +14,7 @@
 #import "PowerUp.h"
 #import "MenuAlert.h"
 #import "ScoreHistory.h"
+#import "Level.h"
 
 @implementation CharacterLifeMeter
 
@@ -129,112 +130,26 @@
     }
 }
 
-
--(void)spawnPowerUp
-{
-    HealthPack * p = [[HealthPack alloc] init] ;
-    p.position = CGPointMake(self.size.width / 2 + arc4random_uniform(self.size.width / 2),
-                             self.size.height);
-    [self.world addChild:p] ;
-    [p runAction:[SKAction repeatActionForever:[SKAction moveByX:0 y:-50 duration:1]]] ;
-}
-
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
-    
+    self.physicsWorld.contactDelegate = self;
+
+    self.backgroundColor = [NSColor lightGrayColor] ;
     self.world = [[SKNode alloc] init] ;
     [self addChild:self.world] ;
-    
-    self.backgroundColor = [NSColor lightGrayColor] ;
-    /* Setup your scene here */
-    self.physicsWorld.contactDelegate = self;
+
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-empty" ofType:@"xml"] ;
+    Level * level = [[Level alloc] initWithXMLPath:path] ;
+    [self.world addChild:level] ;
     
     /* Hero setup. */
     self.hero = [[Hero alloc] init] ;
-    self.hero.position = CGPointMake(300, 300);
+    self.hero.position = level.startPosition ;
     [self.world addChild:self.hero];
     
-    /* Enemy setup */
-    self.enemy = [[Enemy alloc] init] ;
-    self.enemy.position = CGPointMake(800, 300);
-    [self.world addChild:self.enemy];
-    [self.enemy keepMovingInBounds :self.size.width / 2 + self.enemy.size.width / 2
-                                   :self.enemy.size.height / 2
-                                   :self.size.width - self.enemy.size.width / 2
-                                   :self.size.height - self.enemy.size.height / 2] ;
-    [self.enemy keepAttackingCharacter:self.hero] ;
-    
-    /* Add bounds */
-    [self setupBounds] ;
-    [self setupLevel] ;
-    [self setupHud] ;
-    
-    [self runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction waitForDuration:20],
-                                                                       [SKAction runBlock:^{[self spawnPowerUp];}]]]]];
+    self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.hero] ;
     
     self.startTime = [NSDate date] ;
-}
-
--(void) setupBounds
-{
-    Ground * floor = [[Ground alloc] initWithWidth:self.size.width] ;
-    Wall * lwall = [[Wall alloc] initWithHeight:self.size.height] ;
-    Wall * rwall = [[Wall alloc] initWithHeight:self.size.height] ;
-    //TODO: Do not use Ground for roof...
-    Ground * roof = [[Ground alloc] initWithWidth:self.size.width] ;
-    floor.position = CGPointMake(self.size.width / 2, 0) ;
-    lwall.position = CGPointMake(0, self.size.height / 2) ;
-    rwall.position = CGPointMake(self.size.width, self.size.height / 2) ;
-    roof.position = CGPointMake(self.size.width / 2, self.size.height) ;
-    [self.world addChild:floor];
-    [self.world addChild:lwall];
-    [self.world addChild:rwall];
-    [self.world addChild:roof];
-    
-    // TODO: Find better than setting a 10 px margin manually
-    SKNode * bounds = [[SKNode alloc] init] ;
-    bounds.physicsBody =
-    [SKPhysicsBody bodyWithEdgeLoopFromRect:
-                          CGRectMake(0, 0, self.frame.size.width + 20, self.frame.size.height + 20) ] ;
-    bounds.position = CGPointMake(-10, -10) ;
-    bounds.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
-    bounds.physicsBody.contactTestBitMask = ~0;
-    bounds.physicsBody.collisionBitMask = ~0;
-    [self.world addChild:bounds] ;
-    
-}
-
--(void)setupLevel
-{
-    Ground * platform = [[Ground alloc] initWithWidth:100] ;
-    platform.position = CGPointMake(200, 200) ;
-    [self.world addChild:platform] ;
-    
-    Wall * wall = [[Wall alloc] initWithHeight:350] ;
-    wall.position = CGPointMake(600, 175) ;
-    [self.world addChild:wall] ;
-    
-    Wall * wall2 = [[Wall alloc] initWithHeight:200] ;
-    wall2.position = CGPointMake(300, self.size.height - 100) ;
-    [self.world addChild:wall2] ;
-    
-    Trap * trap = [[Trap alloc] initWithSize:CGSizeMake(100, 100)] ;
-    trap.position = CGPointMake(0, self.size.height);
-    [trap activate] ;
-    [self.world addChild:trap] ;
-}
-
--(void)updateHud
-{
-    [self.heroHealth update] ;
-    [self.enemyHealth update] ;
-}
-
-
--(void)setupHud
-{
-    self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.hero] ;
-    self.enemyHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.enemy] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
@@ -310,13 +225,13 @@
 
 -(void)update:(CFTimeInterval)currentTime
 {
-    if (self.hero.health <= 0 || self.enemy.health <= 0)
+    if (self.hero.health <= 0)
     {
         [self gameOver] ;
     }
     
     [self.hero updateVelocity] ;
-    [self updateHud] ;
+    [self.heroHealth update] ;
     /* Called before each frame is rendered */
 }
 

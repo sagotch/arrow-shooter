@@ -25,11 +25,11 @@
 @property SKNode * world ;
 
 @property Hero * hero ;
-@property Enemy * enemy ;
+//@property Enemy * enemy ;
 
 //Hud
 @property CharacterLifeMeter * heroHealth ;
-@property CharacterLifeMeter * enemyHealth ;
+//@property CharacterLifeMeter * enemyHealth ;
 
 @property NSDate * startTime ;
 @end
