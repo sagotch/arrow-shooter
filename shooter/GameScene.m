@@ -44,6 +44,12 @@
     return self ;
 }
 
+- (void)didFinishUpdate
+{
+    self.world.position //= //self.hero.position ;
+    = CGPointMake(-(self.hero.position.x - (self.size.width/2)),
+                  -(self.hero.position.y - (self.size.height/2)));
+}
 
 - (void) didBeginContact:(SKPhysicsContact *)contact
 {
@@ -129,12 +135,16 @@
     HealthPack * p = [[HealthPack alloc] init] ;
     p.position = CGPointMake(self.size.width / 2 + arc4random_uniform(self.size.width / 2),
                              self.size.height);
-    [self addChild:p] ;
+    [self.world addChild:p] ;
     [p runAction:[SKAction repeatActionForever:[SKAction moveByX:0 y:-50 duration:1]]] ;
 }
 
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
+    
+    self.world = [[SKNode alloc] init] ;
+    [self addChild:self.world] ;
+    
     self.backgroundColor = [NSColor lightGrayColor] ;
     /* Setup your scene here */
     self.physicsWorld.contactDelegate = self;
@@ -142,12 +152,12 @@
     /* Hero setup. */
     self.hero = [[Hero alloc] init] ;
     self.hero.position = CGPointMake(300, 300);
-    [self addChild:self.hero];
+    [self.world addChild:self.hero];
     
     /* Enemy setup */
     self.enemy = [[Enemy alloc] init] ;
     self.enemy.position = CGPointMake(800, 300);
-    [self addChild:self.enemy];
+    [self.world addChild:self.enemy];
     [self.enemy keepMovingInBounds :self.size.width / 2 + self.enemy.size.width / 2
                                    :self.enemy.size.height / 2
                                    :self.size.width - self.enemy.size.width / 2
@@ -176,10 +186,10 @@
     lwall.position = CGPointMake(0, self.size.height / 2) ;
     rwall.position = CGPointMake(self.size.width, self.size.height / 2) ;
     roof.position = CGPointMake(self.size.width / 2, self.size.height) ;
-    [self addChild:floor];
-    [self addChild:lwall];
-    [self addChild:rwall];
-    [self addChild:roof];
+    [self.world addChild:floor];
+    [self.world addChild:lwall];
+    [self.world addChild:rwall];
+    [self.world addChild:roof];
     
     // TODO: Find better than setting a 10 px margin manually
     SKNode * bounds = [[SKNode alloc] init] ;
@@ -190,7 +200,7 @@
     bounds.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
     bounds.physicsBody.contactTestBitMask = ~0;
     bounds.physicsBody.collisionBitMask = ~0;
-    [self addChild:bounds] ;
+    [self.world addChild:bounds] ;
     
 }
 
@@ -198,20 +208,20 @@
 {
     Ground * platform = [[Ground alloc] initWithWidth:100] ;
     platform.position = CGPointMake(200, 200) ;
-    [self addChild:platform] ;
+    [self.world addChild:platform] ;
     
     Wall * wall = [[Wall alloc] initWithHeight:350] ;
     wall.position = CGPointMake(600, 175) ;
-    [self addChild:wall] ;
+    [self.world addChild:wall] ;
     
     Wall * wall2 = [[Wall alloc] initWithHeight:200] ;
     wall2.position = CGPointMake(300, self.size.height - 100) ;
-    [self addChild:wall2] ;
+    [self.world addChild:wall2] ;
     
     Trap * trap = [[Trap alloc] initWithSize:CGSizeMake(100, 100)] ;
     trap.position = CGPointMake(0, self.size.height);
     [trap activate] ;
-    [self addChild:trap] ;
+    [self.world addChild:trap] ;
 }
 
 -(void)updateHud
@@ -232,7 +242,7 @@
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
-    [self.hero attackPoint:[theEvent locationInNode:self]] ;
+    [self.hero attackPoint:[theEvent locationInNode:self.world]] ;
 }
 
 -(void)keyDown:(NSEvent *)theEvent

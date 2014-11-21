@@ -22,6 +22,8 @@
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 
+@property SKNode * world ;
+
 @property Hero * hero ;
 @property Enemy * enemy ;
 
