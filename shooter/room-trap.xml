@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level width="600" height="600">
+    <hero x="100" y="100" />
+    <trap x="200" y="300" width="100" height="100" activate="YES" />
+    <trap x="400" y="300" width="50" height="50" activate="NO" />
+</level>

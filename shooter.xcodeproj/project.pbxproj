@@ -20,6 +20,7 @@
 		8B488DE01A19DB6100116E11 /* Character.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DDF1A19DB6100116E11 /* Character.m */; };
 		8B488DE31A19DC5300116E11 /* Projectile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DE21A19DC5300116E11 /* Projectile.m */; };
 		8B488DE71A19DD2800116E11 /* Landscape.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B488DE61A19DD2800116E11 /* Landscape.m */; };
+		8B6310891A200D26005C959F /* room-trap.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8B6310881A200D26005C959F /* room-trap.xml */; };
 		8B8D6F6F1A14C9AF009F9915 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F6E1A14C9AF009F9915 /* AppDelegate.m */; };
 		8B8D6F711A14C9AF009F9915 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F701A14C9AF009F9915 /* main.m */; };
 		8B8D6F741A14C9AF009F9915 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F731A14C9AF009F9915 /* GameScene.m */; };
@@ -62,6 +63,7 @@
 		8B488DE41A19DCC300116E11 /* BitMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitMask.h; sourceTree = "<group>"; };
 		8B488DE51A19DD2800116E11 /* Landscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Landscape.h; sourceTree = "<group>"; };
 		8B488DE61A19DD2800116E11 /* Landscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Landscape.m; sourceTree = "<group>"; };
+		8B6310881A200D26005C959F /* room-trap.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "room-trap.xml"; sourceTree = "<group>"; };
 		8B8D6F681A14C9AF009F9915 /* shooter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shooter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B8D6F6C1A14C9AF009F9915 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B8D6F6D1A14C9AF009F9915 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		8B36BABF1A1F73000041E9DC /* Levels */ = {
 			isa = PBXGroup;
 			children = (
+				8B6310881A200D26005C959F /* room-trap.xml */,
 				8B23326A1A1FA5B100E935F6 /* room-enemy.xml */,
 				8B2332681A1F9CDD00E935F6 /* room-empty.xml */,
 			);
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B2332691A1F9CDD00E935F6 /* room-empty.xml in Resources */,
+				8B6310891A200D26005C959F /* room-trap.xml in Resources */,
 				8B3117C61A1A429A009B5F72 /* healthpack-powerup.wav in Resources */,
 				8B3117BD1A1A26D6009B5F72 /* arrow-hit.wav in Resources */,
 				8B3117C11A1A2AB6009B5F72 /* fireball-fire.wav in Resources */,

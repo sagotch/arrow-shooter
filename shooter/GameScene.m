@@ -138,7 +138,7 @@
     self.world = [[SKNode alloc] init] ;
     [self addChild:self.world] ;
 
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-empty" ofType:@"xml"] ;
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-trap" ofType:@"xml"] ;
     Level * level = [[Level alloc] initWithXMLPath:path] ;
     [self.world addChild:level] ;
     

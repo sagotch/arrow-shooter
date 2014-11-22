@@ -89,6 +89,7 @@
     {
         Trap * trap = [[Trap alloc] initWithSize:CGSizeMake(WIDTH, HEIGHT)] ;
         trap.position = POSITION ;
+        [[attributes objectForKey:@"activate"] boolValue] ? [trap activate] : [trap deactivate];
         [self addChild:trap] ;
     }
     else if ([elementName isEqualToString:@"enemy"])
