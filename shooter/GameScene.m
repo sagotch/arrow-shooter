@@ -42,14 +42,15 @@
     [SKAction playSoundFileNamed:@"arrow-fire.wav" waitForCompletion:NO];
     [SKAction playSoundFileNamed:@"arrow-hit.wav" waitForCompletion:NO];
     [SKAction playSoundFileNamed:@"fireball-fire.wav" waitForCompletion:NO];
+    self.keyPress = 0 ;
     return self ;
 }
 
 - (void)didFinishUpdate
 {
-    self.world.position //= //self.hero.position ;
-    = CGPointMake(-(self.hero.position.x - (self.size.width/2)),
-                  -(self.hero.position.y - (self.size.height/2)));
+    self.world.position //= //self.player.position ;
+    = CGPointMake(-(self.player.position.x - (self.size.width/2)),
+                  -(self.player.position.y - (self.size.height/2)));
 }
 
 - (void) didBeginContact:(SKPhysicsContact *)contact
@@ -138,58 +139,44 @@
     self.world = [[SKNode alloc] init] ;
     [self addChild:self.world] ;
 
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-trap" ofType:@"xml"] ;
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-empty" ofType:@"xml"] ;
     Level * level = [[Level alloc] initWithXMLPath:path] ;
     [self.world addChild:level] ;
     
     /* Hero setup. */
-    self.hero = [[Hero alloc] init] ;
-    self.hero.position = level.startPosition ;
-    [self.world addChild:self.hero];
+    self.player = [[Hero alloc] init] ;
+    self.player.position = level.startPosition ;
+    [self.world addChild:self.player];
     
-    self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.hero] ;
+    self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.player] ;
     
     self.startTime = [NSDate date] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
-    [self.hero charge] ;
+    [self.player mouseDown:1 :[theEvent locationInNode:self.world]];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
-    [self.hero attackPoint:[theEvent locationInNode:self.world]] ;
+    [self.player mouseUp:1 :[theEvent locationInNode:self.world]] ;
 }
 
 -(void)keyDown:(NSEvent *)theEvent
 {
-    switch ([theEvent keyCode])
+    int code = [theEvent keyCode] ;
+    switch (code)
     {
-        case 0:  // A
-            self.hero.dir |= LEFT ;
-            break ;
-        case 2:  // D
-            self.hero.dir |= RIGHT ;
-            break ;
-        case 13: // W
-            [self.hero jump] ;
-            break ;
         case 53: // ESC
             [self pause] ;
             break;
+        default:
+            [self.player keyDown:code] ;
     }
 }
 
 -(void)keyUp:(NSEvent *)theEvent
 {
-    switch ([theEvent keyCode])
-    {
-        case 0:  // A
-            self.hero.dir &= ~LEFT ;
-            break ;
-        case 2: // D
-            self.hero.dir &= ~RIGHT ;
-            break ;
-    }
+    [self.player keyUp:[theEvent keyCode]] ;
 }
 
 -(void)quit
@@ -219,18 +206,16 @@
 {
     NSDate * date = [NSDate date] ;
     float time = [date timeIntervalSinceDate:self.startTime] ;
-    [[[ScoreHistory alloc ] init] saveScore:[NSDate date] :time :self.hero.health ] ;
+    [[[ScoreHistory alloc ] init] saveScore:[NSDate date] :time :self.player.health ] ;
     [self quit] ;
 }
 
 -(void)update:(CFTimeInterval)currentTime
 {
-    if (self.hero.health <= 0)
+    if (self.player.health <= 0)
     {
         [self gameOver] ;
     }
-    
-    [self.hero updateVelocity] ;
     [self.heroHealth update] ;
     /* Called before each frame is rendered */
 }

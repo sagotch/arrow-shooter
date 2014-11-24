@@ -24,12 +24,12 @@
 
 @property SKNode * world ;
 
-@property Hero * hero ;
-//@property Enemy * enemy ;
+@property Hero * player ;
+
+@property NSInteger keyPress ;
 
 //Hud
 @property CharacterLifeMeter * heroHealth ;
-//@property CharacterLifeMeter * enemyHealth ;
 
 @property NSDate * startTime ;
 @end
