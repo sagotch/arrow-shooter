@@ -43,7 +43,7 @@
 		8B064FF91A1B42A30099E8B1 /* MenuAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuAlert.h; sourceTree = "<group>"; };
 		8B064FFA1A1B42A30099E8B1 /* MenuAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuAlert.m; sourceTree = "<group>"; };
 		8B2332681A1F9CDD00E935F6 /* room-empty.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "room-empty.xml"; sourceTree = "<group>"; };
-		8B23326A1A1FA5B100E935F6 /* room-enemy.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "room-enemy.xml"; path = "../room-enemy.xml"; sourceTree = "<group>"; };
+		8B23326A1A1FA5B100E935F6 /* room-enemy.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "room-enemy.xml"; sourceTree = "<group>"; };
 		8B2691061A1B82E40072FF12 /* ScoreHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreHistory.h; sourceTree = "<group>"; };
 		8B2691071A1B82E40072FF12 /* ScoreHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreHistory.m; sourceTree = "<group>"; };
 		8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGVectorAdditions.h; sourceTree = "<group>"; };
