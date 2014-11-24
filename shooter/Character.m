@@ -94,19 +94,18 @@
 }
 
 
--(void)mouseDown:(int)btnCode :(CGPoint)at {
+-(void)mouseDown:(int)btnCode :(CGPoint)at
+{
     [self charge] ;
 }
 
--(void)mouseUp:(int)btnCode :(CGPoint)at {
+-(void)mouseUp:(int)btnCode :(CGPoint)at
+{
     [self attackPoint:at] ;
 }
 
 -(void)keyDown:(int)keyCode
 {
-  //  float speed = 400 ;
-  //  float dx = (self.keyPressed & LEFT) ? -speed : ((self.keyPressed & RIGHT) ? speed : 0);
-   // self.physicsBody.velocity = CGVectorMake(dx, self.physicsBody.velocity.dy) ;
     switch (keyCode)
     {
         case 0:  // A
