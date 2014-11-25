@@ -36,29 +36,9 @@
                                                                 [SKAction fadeAlphaTo:1 duration:0.1]]] count:3]] ;
 }
 
--(void) setVelocity:(float)dx :(float)dy
-{
-    self.physicsBody.velocity = CGVectorMake(dx, dy) ;
-}
-
--(void) setVelocityDY:(float) dy
-{
-    [self setVelocity :self.physicsBody.velocity.dx :dy] ;
-}
-
--(void) setVelocityDX:(float) dx
-{
-    [self setVelocity :dx :self.physicsBody.velocity.dy] ;
-}
-
 @end
 
 // Hero
-
-@interface Human ()
-@property int keyPressed ; // FIXME: Separate the movements and factorize with Character
-@end
-
 
 @implementation Human
 -(instancetype)initWithColor:(NSColor *)color size:(CGSize)size
@@ -71,58 +51,10 @@
     self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
     self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
     self.contact = 0 ;
-    self.keyPressed = 0 ;
     return self ;
 }
 
--(void)keyDown:(int)keyCode
-{
-    switch (keyCode)
-    {
-        case 0:  // A
-            if (!(self.keyPressed & LEFT))
-            {
-                [self setVelocityDX: -self.maxSpeed] ;
-                self.keyPressed |= LEFT ;
-            }
-            break ;
-        case 2:  // D
-            if (!(self.keyPressed & RIGHT))
-            {
-                [self setVelocityDX :self.maxSpeed] ;
-                self.keyPressed |= RIGHT ;
-            }
-            break ;
-        case 13: // W
-            if (!(self.keyPressed & UP))
-            {
-                if (self.contact & (DOWN | LEFT | RIGHT))
-                {
-                    self.physicsBody.velocity = CGVectorMake(self.physicsBody.velocity.dx, 0) ;
-                    [self.physicsBody applyImpulse:CGVectorMake(0, 150)] ;
-                }
-                self.keyPressed |= UP ;
-                break ;
-            }
-    }
-}
 
--(void)keyUp:(int) keyCode
-{
-    switch (keyCode)
-    {
-        case 0:  // A
-            self.keyPressed &= ~LEFT ;
-            [self setVelocityDX: (self.keyPressed & RIGHT ? self.maxSpeed : 0)] ;
-            break ;
-        case 2: // D
-            self.keyPressed &= ~RIGHT ;
-            [self setVelocityDX: (self.keyPressed & LEFT ? -self.maxSpeed : 0)] ;
-            break ;
-        case 13: // W
-            self.keyPressed &= ~UP ;
-    }
-}
 
 @end
 

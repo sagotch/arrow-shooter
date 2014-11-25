@@ -21,11 +21,4 @@ enum category {
     POWERUP       = 0x1 << 9
 };
 
-enum direction {
-    LEFT  = 0x1 << 1,
-    RIGHT = 0x1 << 2,
-    UP    = 0x1 << 3,
-    DOWN  = 0x1 << 4
-};
-
 #endif

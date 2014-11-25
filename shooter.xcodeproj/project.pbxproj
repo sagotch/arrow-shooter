@@ -27,6 +27,7 @@
 		8B8D6F781A14C9AF009F9915 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F771A14C9AF009F9915 /* Images.xcassets */; };
 		8B8D6F7B1A14C9AF009F9915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F791A14C9AF009F9915 /* MainMenu.xib */; };
 		8B8D6F871A14C9AF009F9915 /* shooterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F861A14C9AF009F9915 /* shooterTests.m */; };
+		8BFBB0791A2476A5002F1F1F /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFBB0781A2476A5002F1F1F /* Controller.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		8B8D6F801A14C9AF009F9915 /* shooterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = shooterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B8D6F851A14C9AF009F9915 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B8D6F861A14C9AF009F9915 /* shooterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shooterTests.m; sourceTree = "<group>"; };
+		8BFBB0771A2476A5002F1F1F /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		8BFBB0781A2476A5002F1F1F /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +150,8 @@
 				8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */,
 				8B488DDE1A19DB6100116E11 /* Character.h */,
 				8B488DDF1A19DB6100116E11 /* Character.m */,
+				8BFBB0771A2476A5002F1F1F /* Controller.h */,
+				8BFBB0781A2476A5002F1F1F /* Controller.m */,
 				8B488DE11A19DC5300116E11 /* Projectile.h */,
 				8B488DE21A19DC5300116E11 /* Projectile.m */,
 				8B36BAC21A1F85880041E9DC /* Level.h */,
@@ -303,6 +308,7 @@
 				8B8D6F711A14C9AF009F9915 /* main.m in Sources */,
 				8B36BAC41A1F85880041E9DC /* Level.m in Sources */,
 				8B8D6F741A14C9AF009F9915 /* GameScene.m in Sources */,
+				8BFBB0791A2476A5002F1F1F /* Controller.m in Sources */,
 				8B2691081A1B82E40072FF12 /* ScoreHistory.m in Sources */,
 				8B8D6F6F1A14C9AF009F9915 /* AppDelegate.m in Sources */,
 				8B488DE71A19DD2800116E11 /* Landscape.m in Sources */,

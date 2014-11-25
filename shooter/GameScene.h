@@ -12,6 +12,7 @@
 #import "Character.h"
 #import "Projectile.h"
 #import "Landscape.h"
+#import "Controller.h"
 
 @interface CharacterLifeMeter : SKSpriteNode
 @property Character * character ;
@@ -24,7 +25,8 @@
 
 @property SKNode * world ;
 
-@property Hero * player ;
+@property Character * player ;
+@property Controller * controller ;
 
 @property NSInteger keyPress ;
 

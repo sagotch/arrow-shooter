@@ -15,6 +15,7 @@
 #import "MenuAlert.h"
 #import "ScoreHistory.h"
 #import "Level.h"
+#import "Controller.h"
 
 @implementation CharacterLifeMeter
 
@@ -148,6 +149,7 @@
     self.player.position = level.startPosition ;
     [self.world addChild:self.player];
     
+    self.controller = [[HumanController alloc] initWithCharacter:self.player] ;
     self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.player] ;
     
     self.startTime = [NSDate date] ;
@@ -170,13 +172,13 @@
             [self pause] ;
             break;
         default:
-            [self.player keyDown:code] ;
+            [self.controller keyDown:code] ;
     }
 }
 
 -(void)keyUp:(NSEvent *)theEvent
 {
-    [self.player keyUp:[theEvent keyCode]] ;
+    [self.controller keyUp:[theEvent keyCode]] ;
 }
 
 -(void)quit
