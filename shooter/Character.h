@@ -25,13 +25,24 @@
 -(void) mouseUp:(int)btnCode :(CGPoint)at ;
 @end
 
-@interface Hero : Character
+// HUMANS //
+
+@interface Human : Character
 @property int contact ;
+@end
+
+@interface Hero : Human
 @property NSDate* chargeStart ;
 -(void) charge ;
 @end
 
-@interface Enemy : Character
+
+// GHOSTS //
+
+@interface Ghost : Character
+@end
+
+@interface Enemy : Ghost
 -(void)keepAttackingCharacter:(Character *)character ;
 -(void)keepMovingInBounds:(float)xmin :(float)ymin :(float)xmax :(float)ymax;
 @end

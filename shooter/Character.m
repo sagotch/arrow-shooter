@@ -55,53 +55,24 @@
 
 // Hero
 
-@interface Hero ()
-@property int keyPressed ;
+@interface Human ()
+@property int keyPressed ; // FIXME: Separate the movements and factorize with Character
 @end
 
-@implementation Hero
 
--(instancetype)init
+@implementation Human
+-(instancetype)initWithColor:(NSColor *)color size:(CGSize)size
 {
-    self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(50, 75)] ;
+    self = [super initWithColor:color size:size] ;
     self.physicsBody.dynamic = YES ;
     self.physicsBody.allowsRotation = NO ;
     self.physicsBody.restitution = 0 ;
     self.physicsBody.friction = 0 ;
-    self.physicsBody.categoryBitMask = HERO ;
     self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
     self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
-    self.maxHealth = 100 ;
-    self.health = self.maxHealth ;
-    self.maxSpeed = 500 ;
+    self.contact = 0 ;
+    self.keyPressed = 0 ;
     return self ;
-}
-
--(void)charge
-{
-    self.chargeStart = [NSDate date] ;
-}
-
--(void)attackPoint:(CGPoint)point
-{
-    float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
-    [super throwProjectile:[[Arrow alloc] init] withForce:(500 * charge) toward:point] ;
-}
-
--(void)attackCharacter:(Character *)character
-{
-    [self attackPoint:character.position] ;
-}
-
-
--(void)mouseDown:(int)btnCode :(CGPoint)at
-{
-    [self charge] ;
-}
-
--(void)mouseUp:(int)btnCode :(CGPoint)at
-{
-    [self attackPoint:at] ;
 }
 
 -(void)keyDown:(int)keyCode
@@ -155,14 +126,63 @@
 
 @end
 
+@implementation Hero
+
+-(instancetype)init
+{
+    self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(50, 75)] ;
+    self.physicsBody.categoryBitMask = HERO ;
+    self.maxHealth = 100 ;
+    self.health = self.maxHealth ;
+    self.maxSpeed = 500 ;
+    return self ;
+}
+
+-(void)mouseDown:(int)btnCode :(CGPoint)at
+{
+    [self charge] ;
+}
+
+-(void)mouseUp:(int)btnCode :(CGPoint)at
+{
+    [self attackPoint:at] ;
+}
+
+-(void)charge
+{
+    self.chargeStart = [NSDate date] ;
+}
+
+-(void)attackPoint:(CGPoint)point
+{
+    float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
+    [super throwProjectile:[[Arrow alloc] init] withForce:(500 * charge) toward:point] ;
+}
+
+-(void)attackCharacter:(Character *)character
+{
+    [self attackPoint:character.position] ;
+}
+
+@end
+
+@implementation Ghost
+-(instancetype) initWithColor:(NSColor *)color size:(CGSize)size
+{
+    self = [super initWithColor:color size:size] ;
+    self.physicsBody.dynamic = NO ;
+    self.physicsBody.collisionBitMask = 0 ;
+    self.physicsBody.contactTestBitMask = 0 ;
+    return self ;
+}
+
+@end
+
 @implementation Enemy
 -(instancetype)init
 {
     self = [super initWithColor:[NSColor redColor] size:CGSizeMake(50, 50)] ;
-    self.physicsBody.dynamic = NO ;
     self.physicsBody.categoryBitMask = ENEMY ;
-    self.physicsBody.collisionBitMask = 0 ;
-    self.physicsBody.contactTestBitMask = 0 ;
     self.maxHealth = 100 ;
     self.health = self.maxHealth ;
     return self ;
