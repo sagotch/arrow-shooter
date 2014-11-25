@@ -7,6 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Collidable.h"
+
+@interface Bounds : SKNode <Collidable>
+@end
 
 @interface Level : SKNode <NSXMLParserDelegate>
 @property float width ;

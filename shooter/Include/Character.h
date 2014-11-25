@@ -7,9 +7,17 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Collidable.h"
 #import "Weapon.h"
 
-@interface Character : SKSpriteNode
+enum direction {
+    LEFT  = 0x1 << 1,
+    RIGHT = 0x1 << 2,
+    UP    = 0x1 << 3,
+    DOWN  = 0x1 << 4
+};
+
+@interface Character : SKSpriteNode <Collidable>
 @property float maxHealth ;
 @property float health ;
 @property float maxSpeed ;

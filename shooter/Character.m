@@ -7,9 +7,9 @@
 //
 
 #import "Character.h"
-#import "BitMask.h"
 #import "Weapon.h"
-
+#import "Landscape.h"
+#import "PowerUp.h"
 
 @implementation Character
 
@@ -38,8 +38,8 @@
     self.physicsBody.allowsRotation = NO ;
     self.physicsBody.restitution = 0 ;
     self.physicsBody.friction = 0 ;
-    self.physicsBody.collisionBitMask = GROUND | WALL | TRAP ;
-    self.physicsBody.contactTestBitMask = GROUND | WALL | TRAP ;
+    self.physicsBody.collisionBitMask = GROUND | WALL ;
+    self.physicsBody.contactTestBitMask = GROUND | WALL ;
     self.contact = 0 ;
     return self ;
 }
@@ -58,6 +58,45 @@
     return self ;
 }
 
+-(void) didBeginContactWithBody:(SKNode<Collidable> *)b
+{
+    if (b.physicsBody.categoryBitMask & GROUND)
+    {
+        self.contact |= DOWN ;
+    }
+    else if (b.physicsBody.categoryBitMask & WALL)
+    {
+        self.contact |= (self.position.x < b.position.x ? RIGHT : LEFT) ;
+    }
+    else if ((b.physicsBody.categoryBitMask & FIREBALL) != 0)
+    {
+        [((FireBall *) b) hitCharacter:self] ;
+        [b removeFromParent] ;
+    }
+    else if (b.physicsBody.categoryBitMask & TRAP)
+    {
+        [((Trap *) b) hitCharacter:self] ;
+    }
+    else if (b.physicsBody.categoryBitMask & POWERUP)
+    {
+        [((PowerUp *) b) powerUpCharacter:self] ;
+        [b removeFromParent] ;
+    }
+    
+}
+
+-(void) didEndContactWithBody:(SKNode<Collidable> *)b
+{
+    if ((b.physicsBody.categoryBitMask & GROUND) != 0)
+    {
+        self.contact &= (~DOWN);
+    }
+    else if ((b.physicsBody.categoryBitMask & WALL) != 0)
+    {
+        self.contact &= ~(self.position.x < b.position.x ? RIGHT : LEFT) ;
+    }
+}
+
 @end
 
 @implementation Ghost
@@ -69,6 +108,11 @@
     self.physicsBody.contactTestBitMask = 0 ;
     return self ;
 }
+
+-(void) didBeginContactWithBody:(SKNode<Collidable> *)b
+{
+}
+
 
 @end
 

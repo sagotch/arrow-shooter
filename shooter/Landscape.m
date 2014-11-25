@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Landscape.h"
-#import "BitMask.h"
 
 @implementation Landscape
 
@@ -20,6 +19,14 @@
     self.physicsBody.friction = 0;
     self.physicsBody.dynamic = NO ;
     return self ;
+}
+
+-(void) didBeginContactWithBody:(SKNode<Collidable> *)b
+{
+    if (b.physicsBody.categoryBitMask & ARROW)
+    {
+        [b removeFromParent] ;
+    }
 }
 
 @end

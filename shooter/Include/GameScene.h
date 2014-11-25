@@ -7,8 +7,6 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-#import "BitMask.h"
 #import "Character.h"
 #import "Projectile.h"
 #import "Landscape.h"

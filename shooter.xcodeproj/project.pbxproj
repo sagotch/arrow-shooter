@@ -58,11 +58,11 @@
 		8B3117C71A1A4C52009B5F72 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		8B36BAC21A1F85880041E9DC /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Level.h; sourceTree = "<group>"; };
 		8B36BAC31A1F85880041E9DC /* Level.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Level.m; sourceTree = "<group>"; };
+		8B4427D31A24BF6800BBF176 /* Collidable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Collidable.h; sourceTree = "<group>"; };
 		8B488DDE1A19DB6100116E11 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Character.h; sourceTree = "<group>"; };
 		8B488DDF1A19DB6100116E11 /* Character.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Character.m; sourceTree = "<group>"; };
 		8B488DE11A19DC5300116E11 /* Projectile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Projectile.h; sourceTree = "<group>"; };
 		8B488DE21A19DC5300116E11 /* Projectile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Projectile.m; sourceTree = "<group>"; };
-		8B488DE41A19DCC300116E11 /* BitMask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BitMask.h; sourceTree = "<group>"; };
 		8B488DE51A19DD2800116E11 /* Landscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Landscape.h; sourceTree = "<group>"; };
 		8B488DE61A19DD2800116E11 /* Landscape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Landscape.m; sourceTree = "<group>"; };
 		8B6310881A200D26005C959F /* room-trap.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "room-trap.xml"; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 			isa = PBXGroup;
 			children = (
 				8B8D6F6D1A14C9AF009F9915 /* AppDelegate.h */,
-				8B488DE41A19DCC300116E11 /* BitMask.h */,
 				8B2AF7AD1A154C02005F0957 /* CGVectorAdditions.h */,
 				8B488DDE1A19DB6100116E11 /* Character.h */,
+				8B4427D31A24BF6800BBF176 /* Collidable.h */,
 				8BFBB0771A2476A5002F1F1F /* Controller.h */,
 				8B8D6F721A14C9AF009F9915 /* GameScene.h */,
 				8B488DE51A19DD2800116E11 /* Landscape.h */,

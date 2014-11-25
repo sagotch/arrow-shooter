@@ -7,9 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Collidable.h"
 #import "Character.h"
 
-@interface Landscape : SKSpriteNode
+@interface Landscape : SKSpriteNode <Collidable>
 @end
 
 @interface Ground : Landscape

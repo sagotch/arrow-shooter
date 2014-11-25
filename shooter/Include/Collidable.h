@@ -1,13 +1,12 @@
 //
-//  BitMask.h
+//  Collidable.h
 //  shooter
 //
-//  Created by Julien Sagot on 17/11/14.
+//  Created by Julien Sagot on 25/11/14.
 //  Copyright (c) 2014 ju. All rights reserved.
 //
 
-#ifndef shooter_BitMask_h
-#define shooter_BitMask_h
+#import <SpriteKit/SpriteKit.h>
 
 enum category {
     OUT_OF_BOUNDS = 0x1 << 1,
@@ -18,7 +17,11 @@ enum category {
     TRAP          = 0x1 << 6,
     ARROW         = 0x1 << 7,
     FIREBALL      = 0x1 << 8,
-    POWERUP       = 0x1 << 9
+    POWERUP       = 0x1 << 9,
+    SIGHT         = 0x1 << 10
 };
 
-#endif
+@protocol Collidable <NSObject>
+-(void) didBeginContactWithBody :(SKNode <Collidable> *)b ;
+-(void) didEndContactWithBody :(SKNode <Collidable> *)b ;
+@end

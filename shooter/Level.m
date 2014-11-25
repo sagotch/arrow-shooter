@@ -9,7 +9,25 @@
 #import "Level.h"
 #import "Landscape.h"
 #import "Character.h"
-#import "BitMask.h"
+
+@implementation Bounds
+-(instancetype) initWithWidth :(float)w Height:(float)h
+{
+    self = [super init] ;
+    self.physicsBody =
+    [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, w, h) ] ;
+    self.position = CGPointMake(-10, -10) ;
+    self.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
+    self.physicsBody.contactTestBitMask = ~0;
+    self.physicsBody.collisionBitMask = ~0;
+    return self ;
+}
+
+-(void) didBeginContactWithBody:(SKNode<Collidable> *)b
+{
+    [b removeFromParent] ;
+}
+@end
 
 @implementation Level
 
@@ -41,13 +59,8 @@
     [self addChild:roof];
     
     // TODO: Find better than setting a 10 px margin manually
-    SKNode * bounds = [[SKNode alloc] init] ;
-    bounds.physicsBody =
-    [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, width + 20, height + 20) ] ;
+    Bounds * bounds = [[Bounds alloc] initWithWidth:width + 20 Height:height + 20 ];
     bounds.position = CGPointMake(-10, -10) ;
-    bounds.physicsBody.categoryBitMask = OUT_OF_BOUNDS ;
-    bounds.physicsBody.contactTestBitMask = ~0;
-    bounds.physicsBody.collisionBitMask = ~0;
     [self addChild:bounds] ;
     
 }
@@ -55,7 +68,7 @@
 -(Enemy *) mkEnemyInBounds :(float)xmin :(float)ymin :(float)xmax :(float)ymax
 {
     Enemy * e = [[Enemy alloc] init] ;
-    [e keepMovingInBounds :xmin :ymin :xmax :ymax] ;
+   // [e keepMovingInBounds :xmin :ymin :xmax :ymax] ;
     return e ;
 }
 

@@ -16,6 +16,7 @@
 #import "ScoreHistory.h"
 #import "Level.h"
 #import "Controller.h"
+#import "Collidable.h"
 
 @implementation CharacterLifeMeter
 
@@ -56,79 +57,29 @@
 
 - (void) didBeginContact:(SKPhysicsContact *)contact
 {
-    SKPhysicsBody * a, * b;
-    
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    { a = contact.bodyA; b = contact.bodyB; }
-    else
-    { a = contact.bodyB; b = contact.bodyA; }
-    
-    if ((a.categoryBitMask & OUT_OF_BOUNDS) != 0)
+    if (contact.bodyA.contactTestBitMask & contact.bodyB.categoryBitMask)
     {
-        [b.node removeFromParent] ;
+        [((SKNode <Collidable> *) contact.bodyA.node)
+         didBeginContactWithBody:((SKNode <Collidable> *) contact.bodyB.node)] ;
     }
-    else if ((a.categoryBitMask & HERO) != 0)
+    if (contact.bodyB.contactTestBitMask & contact.bodyA.categoryBitMask)
     {
-        if ((b.categoryBitMask & GROUND) != 0)
-        {
-            ((Hero *) a.node).contact |= DOWN ;
-        }
-        else if ((b.categoryBitMask & WALL) != 0)
-        {
-            ((Hero *) a.node).contact |=
-            (a.node.position.x < b.node.position.x ? RIGHT : LEFT) ;
-        }
-        else if ((b.categoryBitMask & FIREBALL) != 0)
-        {
-            [((FireBall *) b.node) hitCharacter:(Character *)a.node] ;
-            [b.node removeFromParent] ;
-        }
-        else if ((b.categoryBitMask & TRAP) != 0)
-        {
-            [((Trap *) b.node) hitCharacter:(Character *)a.node] ;
-        }
-        else if ((b.categoryBitMask & POWERUP) != 0)
-        {
-            [((PowerUp *) b.node) powerUpCharacter:(Character *)a.node] ;
-            [b.node removeFromParent] ;
-        }
-    }
-    else if ((a.categoryBitMask & ENEMY) != 0)
-    {
-        if ((b.categoryBitMask & ARROW) != 0)
-        {
-            [((Arrow *) b.node) hitCharacter:(Character *)a.node] ;
-            [b.node removeFromParent] ;
-        }
-    }
-    else if ((((a.categoryBitMask & WALL) != 0)
-              || (a.categoryBitMask & GROUND) != 0)
-             && (b.categoryBitMask & ARROW) != 0)
-    {
-        [b.node removeFromParent] ;
+        [((SKNode <Collidable> *) contact.bodyB.node)
+         didBeginContactWithBody:((SKNode <Collidable> *) contact.bodyA.node)] ;
     }
 }
 
 -(void) didEndContact:(SKPhysicsContact *)contact
 {
-    SKPhysicsBody * a, * b;
-    
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    { a = contact.bodyA; b = contact.bodyB; }
-    else
-    { a = contact.bodyB; b = contact.bodyA; }
-    
-    if ((a.categoryBitMask & HERO) != 0)
+    if (contact.bodyA.contactTestBitMask & contact.bodyB.categoryBitMask)
     {
-        if ((b.categoryBitMask & GROUND) != 0)
-        {
-            ((Hero *) a.node).contact &= (~DOWN);
-        }
-        else if ((b.categoryBitMask & WALL) != 0)
-        {
-            ((Hero *) a.node).contact &=
-            ~(a.node.position.x < b.node.position.x ? RIGHT : LEFT) ;
-        }
+        [((SKNode <Collidable> *) contact.bodyA.node)
+         didEndContactWithBody:((SKNode <Collidable> *) contact.bodyB.node)] ;
+    }
+    if (contact.bodyB.contactTestBitMask & contact.bodyA.categoryBitMask)
+    {
+        [((SKNode <Collidable> *) contact.bodyB.node)
+         didEndContactWithBody:((SKNode <Collidable> *) contact.bodyA.node)] ;
     }
 }
 
@@ -140,7 +91,7 @@
     self.world = [[SKNode alloc] init] ;
     [self addChild:self.world] ;
 
-    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-empty" ofType:@"xml"] ;
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"room-enemy" ofType:@"xml"] ;
     Level * level = [[Level alloc] initWithXMLPath:path] ;
     [self.world addChild:level] ;
     

@@ -7,9 +7,10 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Collidable.h"
 @class Character ;
 
-@interface Projectile : SKSpriteNode
+@interface Projectile : SKSpriteNode <Collidable>
 @property float damage ;
 @property NSString * soundHit ;
 @property NSString * soundFire ;

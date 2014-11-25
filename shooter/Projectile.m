@@ -8,7 +8,6 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Projectile.h"
-#import "BitMask.h"
 #import "Character.h"
 
 @implementation Projectile
@@ -45,11 +44,20 @@
     self = [super initWithColor:[NSColor blueColor] size:CGSizeMake(10, 10)] ;
     self.physicsBody.dynamic = YES ;
     self.physicsBody.categoryBitMask = ARROW ;
-    self.physicsBody.collisionBitMask = GROUND | ARROW | ENEMY | WALL ;
-    self.physicsBody.contactTestBitMask = GROUND | ARROW | ENEMY | WALL ;
+    self.physicsBody.collisionBitMask = ENEMY ;
+    self.physicsBody.contactTestBitMask = ENEMY ;
     self.damage = 5 ;
     self.soundFire = @"arrow-fire.wav" ;
     return self ;
+}
+
+-(void) didBeginContactWithBody:(SKNode<Collidable> *)b
+{
+    if (b.physicsBody.categoryBitMask & ENEMY)
+    {
+        [self hitCharacter:(Character *)b] ;
+        [self removeFromParent] ;
+    }
 }
 
 -(void)hitCharacter:(Character *)c
