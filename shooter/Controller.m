@@ -7,12 +7,13 @@
 //
 
 #import "Controller.h"
+#import "Weapon.h"
 
-@interface Controller ()
+@interface CharacterController ()
 @property int keyPressed ;
 @end
 
-@implementation Controller
+@implementation CharacterController
 
 -(instancetype) initWithCharacter:(Character *)character
 {
@@ -77,11 +78,6 @@
 
 @implementation HumanController
 
--(instancetype) initWithHuman:(Human *)character
-{
-    return [super initWithCharacter:character] ;
-}
-
 -(void)onKeyDown:(int)keyCode
 {
     switch (keyCode)
@@ -117,10 +113,6 @@
 @end
 
 @implementation GhostController
--(instancetype) initWithGhost:(Ghost *)character
-{
-    return [super initWithCharacter:character] ;
-}
 
 -(void)onKeyDown:(int)keyCode
 {
@@ -158,5 +150,26 @@
             [self setVelocityDY: (self.keyPressed & UP ? self.character.maxSpeed : 0)] ;
             break ;
     }
+}
+@end
+
+@implementation WeaponController
+-(instancetype) initWithWeapon:(Weapon *) weapon
+{
+    self = [super init] ;
+    self.weapon = weapon ;
+    return self ;
+}
+@end
+
+@implementation BowController
+-(void)mouseDown:(int)btnCode :(CGPoint)at
+{
+    [self.weapon charge] ;
+}
+
+-(void)mouseUp:(int)btnCode :(CGPoint)at
+{
+    [self.weapon fireToward:at] ;
 }
 @end

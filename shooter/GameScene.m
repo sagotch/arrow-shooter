@@ -147,20 +147,23 @@
     /* Hero setup. */
     self.player = [[Hero alloc] init] ;
     self.player.position = level.startPosition ;
+    self.player.weapon = [[Bow alloc] init] ;
+    [self.player addChild:self.player.weapon] ;
     [self.world addChild:self.player];
     
-    self.controller = [[HumanController alloc] initWithCharacter:self.player] ;
+    self.heroController = [[HumanController alloc] initWithCharacter:self.player] ;
+    self.weaponController = [[BowController alloc] initWithWeapon:self.player.weapon] ;
     self.heroHealth = [[CharacterLifeMeter alloc] initWithCharacter:self.player] ;
     
     self.startTime = [NSDate date] ;
 }
 
 -(void)mouseDown:(NSEvent *)theEvent {
-    [self.player mouseDown:1 :[theEvent locationInNode:self.world]];
+    [self.weaponController mouseDown:1 :[theEvent locationInNode:self.player.weapon]];
 }
 
 -(void)mouseUp:(NSEvent *)theEvent {
-    [self.player mouseUp:1 :[theEvent locationInNode:self.world]] ;
+    [self.weaponController mouseUp:1 :[theEvent locationInNode:self.player.weapon]] ;
 }
 
 -(void)keyDown:(NSEvent *)theEvent
@@ -172,13 +175,13 @@
             [self pause] ;
             break;
         default:
-            [self.controller keyDown:code] ;
+            [self.heroController keyDown:code] ;
     }
 }
 
 -(void)keyUp:(NSEvent *)theEvent
 {
-    [self.controller keyUp:[theEvent keyCode]] ;
+    [self.heroController keyUp:[theEvent keyCode]] ;
 }
 
 -(void)quit

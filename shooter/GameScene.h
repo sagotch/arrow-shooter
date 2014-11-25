@@ -26,7 +26,8 @@
 @property SKNode * world ;
 
 @property Character * player ;
-@property Controller * controller ;
+@property CharacterController * heroController ;
+@property WeaponController * weaponController ;
 
 @property NSInteger keyPress ;
 

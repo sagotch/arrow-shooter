@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Character.h"
+#import "Weapon.h"
 
 enum direction {
     LEFT  = 0x1 << 1,
@@ -16,7 +17,7 @@ enum direction {
     DOWN  = 0x1 << 4
 };
 
-@interface Controller : NSObject
+@interface CharacterController : NSObject
 @property Character * character ;
 -(instancetype) initWithCharacter:(Character *)character ;
 -(void) keyDown:(int)keyCode ;
@@ -25,10 +26,21 @@ enum direction {
 -(void) onKeyUp:(int)keyCode;
 @end
 
-@interface HumanController : Controller
+@interface HumanController : CharacterController
 @property Human * character ;
 @end
 
-@interface GhostController : Controller
+@interface GhostController : CharacterController
 @property Ghost * character ;
+@end
+
+@interface WeaponController : NSObject
+@property Weapon * weapon ;
+-(instancetype) initWithWeapon :(Weapon *)weapon ;
+-(void) mouseDown:(int)btnCode :(CGPoint)at ;
+-(void) mouseUp:(int)btnCode :(CGPoint)at ;
+@end
+
+@interface BowController : WeaponController
+@property Bow * weapon ;
 @end

@@ -7,20 +7,16 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
-@class Projectile ;
+#import "Weapon.h"
 
 @interface Character : SKSpriteNode
 @property float maxHealth ;
 @property float health ;
 @property float maxSpeed ;
--(void) attackPoint:(CGPoint)point;
+@property Weapon * weapon ;
+-(void) attackPoint :(CGPoint)point;
 -(void) bleed ;
--(void) attackCharacter:(Character *)character ;
--(void) throwProjectile:(Projectile *)projectile withForce:(float)force toward:(CGPoint)point ;
-
--(void) mouseDown:(int)btnCode :(CGPoint)at ;
--(void) mouseUp:(int)btnCode :(CGPoint)at ;
+-(void) attackCharacter :(Character *)character ;
 @end
 
 // HUMANS //
@@ -30,8 +26,6 @@
 @end
 
 @interface Hero : Human
-@property NSDate* chargeStart ;
--(void) charge ;
 @end
 
 
@@ -41,6 +35,6 @@
 @end
 
 @interface Enemy : Ghost
--(void)keepAttackingCharacter:(Character *)character ;
--(void)keepMovingInBounds:(float)xmin :(float)ymin :(float)xmax :(float)ymax;
+-(void)keepAttackingCharacter :(Character *)character ;
+-(void)keepMovingInBounds :(float)xmin :(float)ymin :(float)xmax :(float)ymax;
 @end

@@ -7,14 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "Character.h"
+@class Character ;
 
 @interface Projectile : SKSpriteNode
 @property float damage ;
 @property NSString * soundHit ;
 @property NSString * soundFire ;
--(void) fire :(CGPoint)from :(CGVector)toward;
--(void)hitCharacter:(Character *)c ;
+-(void) fire :(CGPoint)from :(CGVector)toward ;
+-(void) hitCharacter :(Character *)c ;
 @end
 
 @interface Arrow : Projectile

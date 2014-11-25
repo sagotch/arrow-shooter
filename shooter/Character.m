@@ -7,10 +7,8 @@
 //
 
 #import "Character.h"
-#import "CGVectorAdditions.h"
-#import "Projectile.h"
 #import "BitMask.h"
-
+#import "Weapon.h"
 
 
 @implementation Character
@@ -20,14 +18,6 @@
     self = [super initWithColor:color size:size] ;
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
     return self ;
-}
-
--(void)throwProjectile:(Projectile *)projectile withForce:(float)force toward:(CGPoint)point
-{
-    CGVector v = CGVectorMake(point.x - self.position.x, point.y - self.position.y) ;
-    v = CGVectorMultiplyByScalar(CGVectorNormalize(v), force) ;
-    [projectile fire:self.position :v] ;
-    [self.parent addChild:projectile] ;
 }
 
 -(void) bleed
@@ -54,8 +44,6 @@
     return self ;
 }
 
-
-
 @end
 
 @implementation Hero
@@ -68,32 +56,6 @@
     self.health = self.maxHealth ;
     self.maxSpeed = 500 ;
     return self ;
-}
-
--(void)mouseDown:(int)btnCode :(CGPoint)at
-{
-    [self charge] ;
-}
-
--(void)mouseUp:(int)btnCode :(CGPoint)at
-{
-    [self attackPoint:at] ;
-}
-
--(void)charge
-{
-    self.chargeStart = [NSDate date] ;
-}
-
--(void)attackPoint:(CGPoint)point
-{
-    float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
-    [super throwProjectile:[[Arrow alloc] init] withForce:(500 * charge) toward:point] ;
-}
-
--(void)attackCharacter:(Character *)character
-{
-    [self attackPoint:character.position] ;
 }
 
 @end
@@ -136,16 +98,6 @@
      ];
 }
 
--(void)attackPoint:(CGPoint)point
-{
-    [super throwProjectile:[[FireBall alloc] init] withForce:750 toward:point] ;
-}
-
--(void)attackCharacter:(Character *)character
-{
-    [self attackPoint:character.position];
-}
-
 -(void)keepAttackingCharacter:(Character *)character
 {
     [self runAction:
@@ -153,7 +105,7 @@
       @[[SKAction repeatAction:
          [SKAction sequence:
           @[[SKAction waitForDuration:self.health / 100],
-            [SKAction runBlock:^{[self attackCharacter:character];}]
+            [SKAction runBlock:^{[self.weapon fireToward:character.position];}]
             ]
           ]
                          count:(10 - self.health / 20)

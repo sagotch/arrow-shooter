@@ -28,6 +28,7 @@
 		8B8D6F7B1A14C9AF009F9915 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B8D6F791A14C9AF009F9915 /* MainMenu.xib */; };
 		8B8D6F871A14C9AF009F9915 /* shooterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D6F861A14C9AF009F9915 /* shooterTests.m */; };
 		8BFBB0791A2476A5002F1F1F /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFBB0781A2476A5002F1F1F /* Controller.m */; };
+		8BFBB07D1A248A3E002F1F1F /* Weapon.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BFBB07C1A248A3E002F1F1F /* Weapon.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		8B8D6F861A14C9AF009F9915 /* shooterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shooterTests.m; sourceTree = "<group>"; };
 		8BFBB0771A2476A5002F1F1F /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		8BFBB0781A2476A5002F1F1F /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		8BFBB07B1A248A3E002F1F1F /* Weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Weapon.h; sourceTree = "<group>"; };
+		8BFBB07C1A248A3E002F1F1F /* Weapon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Weapon.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +169,8 @@
 				8B3117C31A1A3415009B5F72 /* PowerUp.m */,
 				8B2691061A1B82E40072FF12 /* ScoreHistory.h */,
 				8B2691071A1B82E40072FF12 /* ScoreHistory.m */,
+				8BFBB07B1A248A3E002F1F1F /* Weapon.h */,
+				8BFBB07C1A248A3E002F1F1F /* Weapon.m */,
 				8B8D6F771A14C9AF009F9915 /* Images.xcassets */,
 				8B8D6F791A14C9AF009F9915 /* MainMenu.xib */,
 				8B8D6F6B1A14C9AF009F9915 /* Supporting Files */,
@@ -314,6 +319,7 @@
 				8B488DE71A19DD2800116E11 /* Landscape.m in Sources */,
 				8B488DE01A19DB6100116E11 /* Character.m in Sources */,
 				8B488DE31A19DC5300116E11 /* Projectile.m in Sources */,
+				8BFBB07D1A248A3E002F1F1F /* Weapon.m in Sources */,
 				8B064FFB1A1B42A30099E8B1 /* MenuAlert.m in Sources */,
 				8B3117C41A1A3415009B5F72 /* PowerUp.m in Sources */,
 			);
