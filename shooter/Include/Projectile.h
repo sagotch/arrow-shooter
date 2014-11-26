@@ -14,14 +14,16 @@
 @property float damage ;
 @property NSString * soundHit ;
 @property NSString * soundFire ;
+@property int targetBitMask ;
+-(instancetype)initWithTarget :(int)target Color:(NSColor *)color Size:(CGSize)size ;
 -(void) fire :(CGPoint)from :(CGVector)toward ;
 -(void) hitCharacter :(Character *)c ;
 @end
 
 @interface Arrow : Projectile
--(instancetype)init ;
+-(instancetype)initWithTarget:(int)target ;
 @end
 
 @interface FireBall : Projectile
--(instancetype)init ;
+-(instancetype)initWithTarget:(int)target ;
 @end

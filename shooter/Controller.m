@@ -89,7 +89,7 @@
             [self setVelocityDX :self.character.maxSpeed] ;
             break ;
         case 13: // W
-            if (self.character.contact & (DOWN | LEFT | RIGHT))
+            if (self.character.contact != 0)
             {
                 self.character.physicsBody.velocity = CGVectorMake(self.character.physicsBody.velocity.dx, 0) ;
                 [self.character.physicsBody applyImpulse:CGVectorMake(0, 150)] ;

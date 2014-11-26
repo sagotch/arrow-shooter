@@ -34,7 +34,7 @@
 -(void)fireToward:(CGPoint)point
 {
     float charge = fmin(3, 1 + 2 * fabsf([self.chargeStart timeIntervalSinceNow])) ;
-    [super throwProjectile:[[Arrow alloc] init] withForce:(500 * charge) toward:point] ;
+    [super throwProjectile:[[Arrow alloc] initWithTarget:ENEMY] withForce:(500 * charge) toward:point] ;
 }
 
 @end
@@ -42,6 +42,6 @@
 @implementation FireBallLauncher
 -(void)fireToward:(CGPoint)point
 {
-    [super throwProjectile:[[FireBall alloc] init] withForce:750 toward:point] ;
+    [super throwProjectile:[[FireBall alloc] initWithTarget:ALLY] withForce:750 toward:point] ;
 }
 @end

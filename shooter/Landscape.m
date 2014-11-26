@@ -15,18 +15,12 @@
 {
     self = [super initWithColor:[NSColor blackColor] size:size];
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size] ;
+    self.physicsBody.categoryBitMask = SOLID | LANDSCAPE ;
+    self.physicsBody.collisionBitMask = ~0 ;
     self.physicsBody.restitution = 0 ;
     self.physicsBody.friction = 0;
     self.physicsBody.dynamic = NO ;
     return self ;
-}
-
--(void) didBeginContactWithBody:(SKNode<Collidable> *)b
-{
-    if (b.physicsBody.categoryBitMask & ARROW)
-    {
-        [b removeFromParent] ;
-    }
 }
 
 @end
@@ -37,7 +31,6 @@
 -(instancetype)initWithWidth:(float)width
 {
     self = [super initWithSize:CGSizeMake(width, 10)] ;
-    self.physicsBody.categoryBitMask = GROUND ;
     return self;
 }
 @end
@@ -49,7 +42,6 @@
 -(instancetype)initWithHeight:(float)height
 {
     self = [super initWithSize:CGSizeMake(10, height)] ;
-    self.physicsBody.categoryBitMask = WALL ;
     return self ;
 }
 
@@ -61,7 +53,7 @@
 -(instancetype) initWithSize:(CGSize)size
 {
     self = [super initWithSize:size] ;
-    self.physicsBody.categoryBitMask = TRAP ;
+    self.physicsBody.categoryBitMask |= TRAP ;
     self.physicsBody.restitution = 1 ;
     self.damage = 10 ;
     return self ;
